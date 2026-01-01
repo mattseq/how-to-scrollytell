@@ -14,17 +14,19 @@ Some websites that implement this art form extremely well include:
 - [GTA VI](https://www.rockstargames.com/VI)
 - [Getty](https://gehry.getty.edu/)
 
+---
+
 ## Main Libraries and Frameworks
 
 The necessary libraries and frameworks generally include:
 - An animation framework such as Framer Motion or GSAP
 - A smooth scroll library such as Lenis
 
-In these notes, we're going to use GSAP + Lenis on top of React.
+In these notes, we're going to use **GSAP + Lenis** on top of **React**.
 
 ---
 
-## Why use Lenis?
+## Why Use Lenis?
 
 - Lenis makes scrolling buttery smooth while allowing for regular CSS transforms, unlike many other smooth scrolling solutions.
 - The most important difference is that it preserves the ability to use `position: sticky` in CSS, which results in an amazing scrolling experience.
@@ -92,6 +94,7 @@ function App() {
 - These features allow for **very creative scrolling animations**
 
 ---
+
 ## Example of a GSAP Animation
 
 ```jsx
@@ -155,6 +158,7 @@ export default function GsapAnims() {
 - Makes animations easier to scale and maintain
 
 ---
+
 ## Using `position: sticky`
 
 ```jsx
@@ -272,6 +276,7 @@ This is similar to the effect
 5. Apply `overflow-hidden` to the scene container to prevent the scrollbars from appearing because the scaled object overflows the viewport
 
 ---
+
 ## Creating a Text Effect
 
 By "text effect" I mean an effect where the characters or words act as individual elements and animate separately. You can do this by using another GSAP plugin called "SplitText".
@@ -306,3 +311,19 @@ SplitText.create("#title", {
 - `type` and `mask` define how to paragraph of text is going to be separated
 - `onSplit` defines the animation to be played for each word
 - `stagger` controls the delay between the animation of each word
+
+## GSAP Timeline
+
+## Horizontal Scroll
+
+## Parallax
+
+## SVG Morphing
+
+## Scroll-Synced Video
+
+## Scroll-Driven Audio
+
+## 3D Models
+
+## Animated Infographics

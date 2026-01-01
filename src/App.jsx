@@ -28,7 +28,7 @@ function App() {
   return (
     <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef} className='overflow-x-hidden'>
       <div id='scene-container-1' className='h-[300vh] p-[2rem]'>
-        <h1>Lenis + GSAP Example</h1>
+        <h1>Basic Sticky Scene</h1>
         <div className='h-screen' />
         <div
           id='sticky-object-1'
@@ -42,7 +42,7 @@ function App() {
         </p>
       </div>
       <div id='scene-container-2' className='h-[300vh] p-[2rem] mt-20 overflow-hidden'>
-        <h1 id='title'>Another Sticky Scene</h1>
+        <h1 id='title'>Text Effect and Zoom</h1>
         <div className='h-screen' />
         <div
           id='sticky-object-2'
@@ -50,7 +50,7 @@ function App() {
         />
       </div>
       <div id='scene-container-3' className='h-[300vh] p-[2rem] bg-fuchsia-500'>
-        <h1>New Scene</h1>
+        <h1 className='sticky top-10'>New Scene</h1>
       </div>
     </ReactLenis>
   )
