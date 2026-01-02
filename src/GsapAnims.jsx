@@ -74,4 +74,17 @@ export default function GsapAnims() {
       drawSVG: '100%'
     }
   );
+
+  gsap.utils.toArray('.parallax').forEach((parallaxObject, i) => {
+    gsap.to(parallaxObject, {
+      y: (i + 1) * -300,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#scene-container-4',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+  });
 }

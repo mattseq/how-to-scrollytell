@@ -81,6 +81,12 @@ function App() {
       </div>
       <div id='scene-container-4' className='h-[300vh] p-[2rem] bg-fuchsia-500'>
         <h1>Parallax</h1>
+        <div className='parallax-container mt-100'>
+          <div className='parallax w-[150px] h-[150px] bg-white rounded-3xl mx-auto mb-30' />
+          <div className='parallax w-[100px] h-[100px] bg-gray-300 rounded-3xl mx-auto mb-30' />
+          <div className='parallax w-[75px] h-[75px] bg-gray-500 rounded-3xl mx-auto mb-30' />
+          <div className='parallax w-[50px] h-[50px] bg-gray-700 rounded-3xl mx-auto mb-30' />
+        </div>
       </div>
     </ReactLenis>
   )

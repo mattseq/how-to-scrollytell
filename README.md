@@ -356,9 +356,9 @@ Here's an example without using ScrollTrigger:
 gsap.to(
 	'#initial-morph-svg',
 	{
-	ease: 'expo.inOut',
-	morphSVG: '#final-morph-svg',
-	duration: 1
+		ease: 'expo.inOut',
+		morphSVG: '#final-morph-svg',
+		duration: 1
 	}
 )
 ```
@@ -369,6 +369,37 @@ gsap.to(
 ---
 
 ## Parallax
+
+Creating a parallax effect is actually surprisingly simple. All you need to do is make each object animate upwards a different amount.
+```jsx
+gsap.to(parallaxObject, {
+	y: objectSpeed,
+	ease: 'none',
+	scrollTrigger: {
+		trigger: '#scene-container-4',
+		start: 'top bottom',
+		end: 'bottom top',
+		scrub: true,
+	}
+});
+```
+- Here we are animating the `parallaxObject` to move upwards using the `y` property. We can make each object animate upwards at different speeds to give a parallax effect. For example:
+```jsx
+gsap.utils.toArray('.parallax-layer-1').forEach((parallaxObject, i) => {
+	gsap.to(parallaxObject, {
+		y: layerSpeed,
+		ease: 'none',
+		scrollTrigger: {
+			trigger: '#scene-container-4',
+			start: 'top bottom',
+			end: 'bottom top',
+			scrub: true,
+		}
+	});
+});
+```
+- With this code, any element with the class name of `.parallax-layer-1` will move upwards at one speed and we can make the next layer animate at a different speed, creating a parallax effect.
+- Just to clarify, `layerSpeed` is not technically a speed - it's the distance the object should cover between the `start` and `end` listed.
 
 ## GSAP Timeline
 
@@ -381,3 +412,7 @@ gsap.to(
 ## 3D Models
 
 ## Animated Infographics
+
+## Inspiration
+
+For inspiration for your next - or first - scrollytelling project, take a look at [GSAP's showcase](https://gsap.com/showcase/).
