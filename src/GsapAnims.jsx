@@ -1,9 +1,13 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
+import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(SplitText);
+gsap.registerPlugin(DrawSVGPlugin);
+gsap.registerPlugin(MorphSVGPlugin) 
 
 export default function GsapAnims() {
   gsap.fromTo(
@@ -22,39 +26,7 @@ export default function GsapAnims() {
       },
     }
   )
-  
-  gsap.fromTo(
-    '#non-sticky-object-2-1',
-    { opacity: 0, x: -500, scale: 0.5 },
-    {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '#non-sticky-object-2-1',
-        start: 'top 50%',
-        end: 'top 0%',
-        scrub: true,
-      },
-    }
-  )
-  gsap.fromTo(
-    '#non-sticky-object-2-2',
-    { opacity: 0, x: 500, scale: 0.5 },
-    {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '#non-sticky-object-2-2',
-        start: 'top 100%',
-        end: 'top 50%',
-        scrub: true,
-      },
-    }
-  )
+
   gsap.to(
     '#sticky-object-2',
     { 
@@ -88,4 +60,18 @@ export default function GsapAnims() {
       });
     }
   });
+
+  gsap.fromTo(
+    '#draw-svg path',
+    { drawSVG: '0%'},
+    {
+      scrollTrigger: {
+        trigger: '#draw-svg',
+        start: 'top 100%',
+        end: 'top -100%',
+        scrub: true,
+      },
+      drawSVG: '100%'
+    }
+  );
 }

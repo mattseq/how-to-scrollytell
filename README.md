@@ -31,16 +31,20 @@ In these notes, we're going to use **GSAP + Lenis** on top of **React**.
 - Lenis makes scrolling buttery smooth while allowing for regular CSS transforms, unlike many other smooth scrolling solutions.
 - The most important difference is that it preserves the ability to use `position: sticky` in CSS, which results in an amazing scrolling experience.
 	- Many of the elements you see on Lenis’s own website use `position: sticky`.
+- A good alternative for Lenis would be using GSAP's ScrollSmoother plugin because it makes things like parallax effects so much easier.
+	- "Sticky positioning" will not work if you use ScrollSmoother instead of Lenis and you will have to rely on GSAP's "pin" property.
+	- Lenis also makes the scrollbar appear completely smooth as well, which ScrollSmoother fails to do.
+	- You can find the docs on ScrollSmoother [here](https://gsap.com/docs/v3/Plugins/ScrollSmoother/).
 
 ---
 
 ## Why Use GSAP?
 
-- GSAP includes a plugin called ScrollTrigger that provides a way to control animations based on scroll progress
+- GSAP is a comprehensive animation framework with lots of support for a variety of different animations, from basic animations to animating text and SVGs.
+- GSAP includes a plugin called ScrollTrigger that provides a way to control animations based on scroll progress.
 - It also includes a property called `scrub` which allows animations to play forward and backward with scroll, instead of just happening once.
-- Framer Motion does not include `scrub`, which lets users replay animations like it's a cinematic.
-- GSAP also provides lots of extra capabilities in the form of plugins.
-- Somewhat unrelated but I would highly recommend taking a look at GSAP's docs, especially the [cheatsheet](https://gsap.com/cheatsheet).
+	- Framer Motion does not include `scrub`, which lets users replay animations like it's a cinematic.
+- I would highly recommend taking a look at GSAP's docs, especially the [cheatsheet](https://gsap.com/cheatsheet).
 
 ---
 
@@ -59,7 +63,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 ## Sync Lenis's Animation Frame Looping with GSAP's
 
-You’ll probably need to sync Lenis’s animation frame loop with GSAP’s ticker.
+You should sync Lenis’s animation frame loop with GSAP’s ticker so that animations and scroll smoothing happen on the same timing, on the same loop. This is the recommended way by Lenis.
 
 ```jsx
 import gsap from 'gsap'
@@ -87,11 +91,11 @@ function App() {
 
 - **RAF** stands for **requestAnimationFrame**
 - This syncs Lenis updates with GSAP’s ticker
-- `ReactLenis` options provide powerful capabilities:
+- `ReactLenis` options provide other capabilities as well:
 	- Vertical and horizontal scrolling
 	- Overscroll behavior
 	- `allowNestedScroll` (nest Lenis instances)
-- These features allow for **very creative scrolling animations**
+- Combining these features can allow for more advanced scrolling animations.
 
 ---
 
@@ -198,6 +202,7 @@ Sticky positioning ends **only when the parent element leaves the viewport**.
 ```
 
 - The pink box sticks **only within the 100vh container**
+- A common mistake is using `position: sticky` for multiple objects and letting them collect on top of each other when the scene container starts to leave the viewport. A simple fix is to ensure that all the sticky objects are inside one singular sticky container if possible.
 
 ---
 
@@ -228,8 +233,9 @@ gsap.to(
 - This can be used to create the "zoom effect" described later
 
 Obviously, this raises the question: should you use `position: sticky` with basic CSS or `pin: true` with GSAP?
-- I would probably use sticky positioning for the most part because it's more rigid in where in sticks (only within its container), making it ideal for basic scenes.
-- GSAP's `pin` is best used in advanced techniques if you need the object to be less rigid, perhaps staying pinned between multiple scenes, or even without a scene.
+- I would probably use sticky positioning for the most part because it's more rigid in where it sticks (only within its container), making it ideal for basic scenes.
+- GSAP's `pin` is best used in advanced techniques if you need to define more specifically where the object should unpin. It's ideal for pinning objects between scenes, pinning multiple objects and unpinning them at different points, etc.
+- Often it's just up to preference.
 
 Also from now on, I will refer to elements using `position: sticky` as being "sticky" and elements using GSAP's `pin` as being "pinned".
 
@@ -251,7 +257,7 @@ A basic scene with a sticky object might look like this:
 
 ## Creating a Zoom-In Effect
 
-This is similar to the effect
+This effect starts with a single object, which then scales up to fill the viewport, at which point you transition directly into the next scene.
 
 1. Start with a single object in the scene container (this is object you're going to zoom in on)
 2. Create a scale animation with GSAP and pin the object:
@@ -312,13 +318,61 @@ SplitText.create("#title", {
 - `onSplit` defines the animation to be played for each word
 - `stagger` controls the delay between the animation of each word
 
-## GSAP Timeline
+There are also a few other GSAP plugins that help you manipulate text such as ScrambleText.
 
-## Horizontal Scroll
+---
+
+## Manipulating SVGs
+
+You can use more GSAP plugins to manipulate SVGs: DrawSVG for animating drawing and MorphSVG for transitions between SVGs.
+
+### DrawSVG
+
+DrawSVG allows you to animate the drawing of an SVG.
+The main limitation of DrawSVG is that it does not animate the fill of an SVG, it only affects strokes. Remember to keep this in mind when selecting or creating SVGs. Now, Here's a simple example:
+```jsx
+gsap.fromTo(
+    '#draw-svg path',
+    { drawSVG: '0%'},
+    {
+      scrollTrigger: {
+        trigger: '#draw-svg',
+        start: 'top 100%',
+        end: 'top -100%',
+        scrub: true,
+      },
+      drawSVG: '100%'
+    }
+  );
+```
+
+The id of `draw-svg` was applied to the `svg` tag itself. `#draw-svg path` selects the `path` tag inside it. DrawSVG must be applied to a `path` tag not an `svg` tag. The rest is pretty self-explanatory.
+
+### MorphSVG
+
+MorphSVG allows you to animate the transition between two SVGs. The most common use for this is when clicking a button.
+Here's an example without using ScrollTrigger:
+```jsx
+gsap.to(
+	'#initial-morph-svg',
+	{
+	ease: 'expo.inOut',
+	morphSVG: '#final-morph-svg',
+	duration: 1
+	}
+)
+```
+- `#initial-morph-svg` refers to the `path` tag of the initial shape
+- `#final-morph-svg` refers to the `path` tag of the final shape
+- You can put both `path` tags within the same SVG to keep things organized, but you need to keep the final shape hidden. You can do this by using `display: none`.
+
+---
 
 ## Parallax
 
-## SVG Morphing
+## GSAP Timeline
+
+## Horizontal Scroll
 
 ## Scroll-Synced Video
 
