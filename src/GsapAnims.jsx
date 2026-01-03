@@ -87,4 +87,49 @@ export default function GsapAnims() {
       }
     });
   });
+
+  gsap.to("#curved-cover", {
+    borderRadius: "0%",
+    ease: "power1.inOut",
+    scrollTrigger: {
+      trigger: "#curved-cover",
+      start: "top 50%",
+      end: "top top",
+      scrub: true,
+    }
+  });
+  
+  gsap.to("#parallax-header", {
+    y: -50,
+    scale: 1.2,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#scene-container-5",
+      start: "top 70%",
+      end: "bottom top",
+      scrub: true,
+    }
+  });
+  gsap.to("#parallax-text-1", {
+    y: -75,
+    scale: 1.2,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#scene-container-5",
+      start: "top 50%",
+      end: "bottom top",
+      scrub: true,
+    }
+  });
+  gsap.to("#parallax-text-2", {
+    y: -100,
+    scale: 1.2,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#scene-container-5",
+      start: "top 30%",
+      end: "bottom top",
+      scrub: true,
+    }
+  });
 }

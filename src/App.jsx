@@ -26,7 +26,7 @@ function App() {
   }, [])
 
   return (
-    <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef} className='overflow-x-hidden'>
+    <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef}>
       <div id='scene-container-1' className='h-[300vh] p-[2rem]'>
         <h1>Basic Sticky Scene</h1>
         <div className='h-screen' />
@@ -80,12 +80,23 @@ function App() {
         </button>
       </div>
       <div id='scene-container-4' className='h-[300vh] p-[2rem] bg-fuchsia-500'>
-        <h1>Parallax</h1>
+        <h1 className='mt-100'>Parallax</h1>
         <div className='parallax-container mt-100'>
           <div className='parallax w-[150px] h-[150px] bg-white rounded-3xl mx-auto mb-30' />
           <div className='parallax w-[100px] h-[100px] bg-gray-300 rounded-3xl mx-auto mb-30' />
           <div className='parallax w-[75px] h-[75px] bg-gray-500 rounded-3xl mx-auto mb-30' />
           <div className='parallax w-[50px] h-[50px] bg-gray-700 rounded-3xl mx-auto mb-30' />
+        </div>
+        <h1>Take a look at this curved transition!</h1>
+      </div>
+      <div id='scene-container-5' className='w-full h-[200vh] relative bg-black'>
+        <div id='curved-cover' className='absolute -top-[20vh] w-full h-[25vh] bg-black rounded-t-[50%]'/>
+        <div id='main-scene-5' className='h-[100vh] flex flex-col items-center justify-center'>
+          <h1 id='parallax-header' className="text-4xl font-bold text-fuchsia-500 bg-linear-to-r from-fuchsia-500 via-orange-400 to-pink-300 bg-clip-text text-transparent">Next Scene</h1>
+          <div className='w-[50%]'>
+            <p id='parallax-text-1' className="mt-10 text-xl text-gray-700 font-medium">Here's some more parallax, but on text. I also added some scaling.</p>
+            <p id='parallax-text-2' className="mt-5 text-xs text-gray-700 font-medium">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+          </div>
         </div>
       </div>
     </ReactLenis>
