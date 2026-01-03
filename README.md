@@ -460,6 +460,31 @@ This section is for discussing transitions in general. If you look at the demo, 
 
 ## Video
 
+For playing videos, we can use the `onUpdate()` callback in GSAP animation. Just update the video's current time to use the animation's progress.
+```jsx
+const video = document.getElementById('video');
+if (video) {
+	video.addEventListener('loadedmetadata', () => {
+		gsap.to(video,
+		{
+			scrollTrigger: {
+				trigger: video,
+				start: 'top 50%',
+				end: 'bottom -50%',
+				scrub: true,
+				onUpdate: self => {
+					video.currentTime = self.progress * video.duration;
+				}
+			}
+		}
+		);
+	});
+}
+```
+- The event listener checks `loadedmetadata` to see if the video has loaded.
+- `video` refers to the `<video />` element.
+- `self.progress` is a percentage which we multiply by the total `video.duration`
+
 ## Audio
 
 ## 3D Models

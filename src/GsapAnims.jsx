@@ -185,4 +185,35 @@ export default function GsapAnims() {
     );
     card
   });
+
+  
+  const video = document.getElementById('video');
+  if (video) {
+    video.addEventListener('loadedmetadata', () => {
+      gsap.to(video,
+        {
+          ease: 'none',
+          scrollTrigger: {
+            trigger: video,
+            start: 'top 50%',
+            end: 'bottom 0%',
+            scrub: true,
+            onUpdate: self => {
+              video.currentTime = self.progress * video.duration;
+            }
+          }
+        }
+      );
+      // Fade out at the end
+      gsap.to(video, {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: video,
+          start: 'bottom 10%',
+          end: 'bottom top',
+          scrub: true,
+        }
+      });
+    });
+  }
 }

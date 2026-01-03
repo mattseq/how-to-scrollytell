@@ -4,6 +4,7 @@ import { ReactLenis, useLenis } from 'lenis/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
 import GsapAnims from './GsapAnims'
+import codingGif from './assets/coding-gif.mp4'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -148,6 +149,21 @@ function App() {
             <p className='mt-10 text-xl text-white font-medium'>This is the scene that slides in from the right after the card stack animation finishes.</p>
           </div>
         </div>
+      </div>
+
+      { /* Scene 7: Filler scene for some spacing and gradient */ }
+      <div id='scene-container-7' className='flex flex-col w-full h-[300vh] bg-linear-to-b from-green-500 to-[#0c0a0b]'></div>
+      
+      { /* Scene 8: Video */ }
+      <div id='scene-container-8' className='flex flex-col items-center justify-center w-full h-[500vh] bg-[#0c0a0b]'>
+          <video
+            id='video'
+            className='sticky top-0 size-150 object-cover'
+            src={codingGif}
+            muted
+            playsInline
+            preload='auto'
+          />
       </div>
       
     </ReactLenis>
