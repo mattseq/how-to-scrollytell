@@ -432,7 +432,7 @@ card_tl.fromTo(card,
 );
 card_tl.to(card,
 	{
-		x: -200*i^2,
+		x: -200*i,
 		y: 20*i,
 		scale: 0.5,
 		ease: 'power3.inOut',
@@ -446,9 +446,13 @@ card_tl.to(card,
 
 ## Horizontal Scroll
 
-There are two main ways to do horizontal scrolling. The first and best one is to not do it at all. You can make the illusion of horizontal scrolling by making the container sticky so that it stays in the viewport and making animations happen as you scroll. This also gives you a bit more control.
+There's one main way to do horizontal scrolling and that's not to do it at all. You can make the illusion of horizontal scrolling by making the container sticky so that it stays in the viewport and making animations happen as you scroll. This also gives you a bit more control. The problem with actual horizontal scrolling is that, by default you can't just scroll as usual. You need to press shift then scroll. We obviously don't want that. There are workarounds and maybe even ways to do it cleanly, I just haven't tried to figure it out yet.
 
-I'm not going to give an example for that because, at this point, you can probably figure it out by yourself.
+## Transitions
+
+This section is for discussing transitions in general. If you look at the demo, you'll see multiple transitions, many of which are achieved slightly different ways.
+
+### Sliding Transitions
 
 ## Hover Effects
 

@@ -26,31 +26,49 @@ function App() {
   }, [])
 
   return (
-    <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef}>
+    <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef} className='overflow-hidden'>
+
+
+      { /* Scene 1: Basic Sticky Scene */ }
       <div id='scene-container-1' className='h-[300vh] p-[2rem]'>
         <h1>Basic Sticky Scene</h1>
         <div className='h-screen' />
+
+        { /* Sticky Object */ }
         <div
           id='sticky-object-1'
           className='box w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto sticky top-[30%]'
         />
+
+        { /* Non-Sticky Object */ }
         <p
           id='non-sticky-object-1'
           className='text-left text-2xl ml-20'
         >
           Hello there.
         </p>
+
       </div>
+
+      { /* Scene 2: Text Effect and Zoom */ }
       <div id='scene-container-2' className='h-[300vh] p-[2rem] mt-20 overflow-hidden'>
         <h1 id='title'>Text Effect and Zoom</h1>
         <div className='h-screen' />
+
+        { /* Zooming Sticky Object */ }
         <div
           id='sticky-object-2'
           className='box w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto'
         />
+
       </div>
+
+
+      { /* Scene 3: SVG Draw and Morph */ }
       <div id='scene-container-3' className='h-[400vh] p-[2rem] bg-fuchsia-500 flex flex-row items-center'>
         <h1 className='sticky top-[50%]'>SVG Draw and Morph</h1>
+
+        { /* DrawSVG Sticky Object */ }
         <svg id="draw-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 103 103" fill="none" strokeWidth="2.2" opacity="1" className='size-100 sticky top-40 ml-20'>
           <defs>
             <linearGradient id="grad-1" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
@@ -61,6 +79,7 @@ function App() {
           <path stroke="url(#grad-1)" d="M50.5 50.5h50v50s-19.2 1.3-37.2-16.7S56 35.4 35.5 15.5C18.5-1 .5.5.5.5v50h50s25.6-.6 38-18 12-32 12-32h-50v100H.5S.2 80.7 11.8 68.2 40 49.7 50.5 50.5Z" />
         </svg>
 
+        { /* MorphSVG Sticky Button */ }
         <button className='sticky size-20 top-100 ml-20'
           onClick={() =>
             gsap.to(
@@ -78,18 +97,29 @@ function App() {
             <path className='hidden' id='final-morph-svg' d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z" fill="#0F0F0F"/>
           </svg>
         </button>
+
       </div>
+      
+
+      { /* Scene 4: Parallax Effect */ }
       <div id='scene-container-4' className='h-[300vh] p-[2rem] bg-fuchsia-500'>
         <h1 className='mt-100'>Parallax</h1>
+
+        { /* Parallax Objects */ }
         <div className='parallax-container mt-100'>
           <div className='parallax w-[150px] h-[150px] bg-white rounded-3xl mx-auto mb-30' />
           <div className='parallax w-[100px] h-[100px] bg-gray-300 rounded-3xl mx-auto mb-30' />
           <div className='parallax w-[75px] h-[75px] bg-gray-500 rounded-3xl mx-auto mb-30' />
           <div className='parallax w-[50px] h-[50px] bg-gray-700 rounded-3xl mx-auto mb-30' />
         </div>
+        
         <h1>Take a look at this curved transition!</h1>
       </div>
+
+      { /* Scene 5: Curved Cover Transition, Card Stack, and Text Scramble */ }
       <div id='scene-container-5' className='w-full h-[500vh] relative bg-black'>
+
+        { /* Curved Cover Transition & Parallax Text */ }
         <div id='curved-cover' className='absolute -top-[20vh] w-full h-[25vh] bg-black rounded-t-[50%]'/>
         <div id='main-scene-5' className='h-[100vh] flex flex-col items-center justify-center'>
           <h1 id='parallax-header' className="text-4xl font-bold text-fuchsia-500 bg-linear-to-r from-fuchsia-500 via-orange-400 to-pink-300 bg-clip-text text-transparent">Next Scene</h1>
@@ -98,13 +128,28 @@ function App() {
             <p id='parallax-text-2' className="mt-5 text-xs text-gray-700 font-medium">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
           </div>
         </div>
+
+        { /* Card Stack and Text Scramble */ }
         <div className="sticky top-0 w-full h-screen flex items-center justify-center gap-10 overflow-hidden" id="card-stack">
           <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 1</div>
           <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 2</div>
           <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 3</div>
           <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 4</div>
         </div>
+        <p id='appear-text' className='sticky top-[50%] text-white text-2xl text-center'></p>
+
+        { /* 
+          Scene that slides in from the top right. Unlike the previous transition, it's still inside the previous scene container.
+          Also it uses a wrapper to prevent overflow issues.
+        */ }
+        <div className='overflow-hidden sticky top-0 w-full'>
+          <div id='scene-container-6' className='sticky top-0 w-full h-screen p-[2rem] bg-green-500 rounded-bl-[50%]'>
+            <h1 className='text-4xl font-bold text-white'>Scene</h1>
+            <p className='mt-10 text-xl text-white font-medium'>This is the scene that slides in from the right after the card stack animation finishes.</p>
+          </div>
+        </div>
       </div>
+      
     </ReactLenis>
   )
 }

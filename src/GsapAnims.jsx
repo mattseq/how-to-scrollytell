@@ -1,15 +1,15 @@
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { SplitText } from 'gsap/SplitText'
-import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
-import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
+import { ScrollTrigger, SplitText, DrawSVGPlugin, MorphSVGPlugin, ScrambleTextPlugin } from 'gsap/all'
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(DrawSVGPlugin);
 gsap.registerPlugin(MorphSVGPlugin) 
+gsap.registerPlugin(ScrambleTextPlugin);
 
 export default function GsapAnims() {
+
+  // Scene 1: Basic Sticky Scene Animation
   gsap.fromTo(
     '#sticky-object-1',
     { opacity: 0, x: -500, scale: 0.5 },
@@ -27,6 +27,7 @@ export default function GsapAnims() {
     }
   )
 
+  // Scene 2: Zoom Animation
   gsap.to(
     '#sticky-object-2',
     { 
@@ -42,6 +43,7 @@ export default function GsapAnims() {
     },
   )
 
+  // Scene 2: Text Animation
   SplitText.create("#title", {
     type: "words, words",
     mask: "lines",
@@ -61,6 +63,7 @@ export default function GsapAnims() {
     }
   });
 
+  // Scene 3: SVG Draw Animation
   gsap.fromTo(
     '#draw-svg path',
     { drawSVG: '0%'},
@@ -75,6 +78,7 @@ export default function GsapAnims() {
     }
   );
 
+  // Scene 4: Parallax Effect
   gsap.utils.toArray('.parallax').forEach((parallaxObject, i) => {
     gsap.to(parallaxObject, {
       y: (i + 1) * -300,
@@ -88,6 +92,7 @@ export default function GsapAnims() {
     });
   });
 
+  // Scene 5: Curved Cover Transition
   gsap.to("#curved-cover", {
     borderRadius: "0%",
     ease: "power1.inOut",
@@ -99,6 +104,7 @@ export default function GsapAnims() {
     }
   });
   
+  // Scene 5: Parallax Text
   gsap.to("#parallax-header", {
     y: -50,
     scale: 1.2,
@@ -133,8 +139,9 @@ export default function GsapAnims() {
     }
   });
 
-  gsap.utils.toArray('#card-stack .card').forEach((card, i) => {
-    const card_tl = gsap.timeline({
+  // Scene 5: Card Stack, Text Scramble, and Slide-in Scene Timeline
+  gsap.utils.toArray('#card-stack .card').forEach((card, i, arr) => {
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '#card-stack',
         start: 'top top',
@@ -142,7 +149,7 @@ export default function GsapAnims() {
         scrub: true,
       }
     });
-    card_tl.fromTo(card, 
+    tl.fromTo(card, 
       { x: 1500, scale: 0 },
       {
         x: 0,
@@ -150,14 +157,32 @@ export default function GsapAnims() {
         ease: 'power3.out',
       }
     );
-    card_tl.to(card,
+    tl.to(card,
       {
-        x: -200*i^2,
+        x: -280*i,
         y: 20*i,
         scale: 0.5,
         ease: 'power3.inOut',
         delay: 0.5
       }
     );
+    tl.to(
+      '#appear-text',
+      {
+        scrambleText: "I use Arch btw.",
+        delay: 0.5
+      }
+    );
+    tl.fromTo(
+      '#scene-container-6',
+      { xPercent: 100, yPercent: -100 },
+      { 
+        xPercent: 0,
+        yPercent: 0,
+        borderRadius: '0%',
+        ease: 'expo.out',
+      }
+    );
+    card
   });
 }
