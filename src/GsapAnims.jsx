@@ -132,4 +132,32 @@ export default function GsapAnims() {
       scrub: true,
     }
   });
+
+  gsap.utils.toArray('#card-stack .card').forEach((card, i) => {
+    const card_tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#card-stack',
+        start: 'top top',
+        end: 'top -300%',
+        scrub: true,
+      }
+    });
+    card_tl.fromTo(card, 
+      { x: 1500, scale: 0 },
+      {
+        x: 0,
+        scale: 1,
+        ease: 'power3.out',
+      }
+    );
+    card_tl.to(card,
+      {
+        x: -200*i^2,
+        y: 20*i,
+        scale: 0.5,
+        ease: 'power3.inOut',
+        delay: 0.5
+      }
+    );
+  });
 }

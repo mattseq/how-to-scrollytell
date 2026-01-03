@@ -20,7 +20,7 @@ function App() {
     GsapAnims();
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.killAll();
       gsap.ticker.remove(update)
     }
   }, [])
@@ -89,7 +89,7 @@ function App() {
         </div>
         <h1>Take a look at this curved transition!</h1>
       </div>
-      <div id='scene-container-5' className='w-full h-[200vh] relative bg-black'>
+      <div id='scene-container-5' className='w-full h-[500vh] relative bg-black'>
         <div id='curved-cover' className='absolute -top-[20vh] w-full h-[25vh] bg-black rounded-t-[50%]'/>
         <div id='main-scene-5' className='h-[100vh] flex flex-col items-center justify-center'>
           <h1 id='parallax-header' className="text-4xl font-bold text-fuchsia-500 bg-linear-to-r from-fuchsia-500 via-orange-400 to-pink-300 bg-clip-text text-transparent">Next Scene</h1>
@@ -97,6 +97,12 @@ function App() {
             <p id='parallax-text-1' className="mt-10 text-xl text-gray-700 font-medium">Here's some more parallax, but on text. I also added some scaling.</p>
             <p id='parallax-text-2' className="mt-5 text-xs text-gray-700 font-medium">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
           </div>
+        </div>
+        <div className="sticky top-0 w-full h-screen flex items-center justify-center gap-10 overflow-hidden" id="card-stack">
+          <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 1</div>
+          <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 2</div>
+          <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 3</div>
+          <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 4</div>
         </div>
       </div>
     </ReactLenis>

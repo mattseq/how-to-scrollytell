@@ -161,6 +161,8 @@ export default function GsapAnims() {
 - Keeps your main component clean
 - Makes animations easier to scale and maintain
 
+Make sure to clean up ScrollTrigger's listeners with `ScrollTrigger.killAll();`
+
 ---
 
 ## Using `position: sticky`
@@ -324,7 +326,7 @@ There are also a few other GSAP plugins that help you manipulate text such as Sc
 
 ## Manipulating SVGs
 
-You can use more GSAP plugins to manipulate SVGs: DrawSVG for animating drawing and MorphSVG for transitions between SVGs.
+You can use GSAP plugins to manipulate SVGs: DrawSVG for animating drawing and MorphSVG for transitions between SVGs.
 
 ### DrawSVG
 
@@ -401,17 +403,64 @@ gsap.utils.toArray('.parallax-layer-1').forEach((parallaxObject, i) => {
 - With this code, any element with the class name of `.parallax-layer-1` will move upwards at one speed and we can make the next layer animate at a different speed, creating a parallax effect.
 - Just to clarify, `layerSpeed` is not technically a speed - it's the distance the object should cover between the `start` and `end` listed.
 
+---
+
 ## GSAP Timeline
+
+GSAP's `Timeline` allows you to combine multiple animations for a single object. It has also has multiple useful capabilities:
+- Obviously, you can combine multiple animations. Without timeline, they might interfere with each other.
+- You can control the entire timeline by using methods such as `timeline.pause` and `timeline.seek(1.5)`. With this, you could make buttons change where an object was in the animation timeline.
+- You can also set defaults that the rest of animations in the timeline will follow, such as easings or ScrollTrigger.
+
+Here's some code from the demo:
+```jsx
+const card_tl = gsap.timeline({
+	scrollTrigger: {
+		trigger: '#card-stack',
+		start: 'top top',
+		end: 'top -300%',
+		scrub: true,
+	}
+});
+card_tl.fromTo(card, 
+	{ x: 1500, scale: 0 },
+	{
+		x: 0,
+		scale: 1,
+		ease: 'power3.out',
+	}
+);
+card_tl.to(card,
+	{
+		x: -200*i^2,
+		y: 20*i,
+		scale: 0.5,
+		ease: 'power3.inOut',
+		delay: 0.5
+	}
+);
+```
+- In this example, the timeline is used to animate cards.
+- As you can see, ScrollTrigger is listed in the defaults for the timeline.
+- It begins with a `fromTo()` method call and then from then on it uses `to()`.
 
 ## Horizontal Scroll
 
-## Scroll-Synced Video
+There are two main ways to do horizontal scrolling. The first and best one is to not do it at all. You can make the illusion of horizontal scrolling by making the container sticky so that it stays in the viewport and making animations happen as you scroll. This also gives you a bit more control.
 
-## Scroll-Driven Audio
+I'm not going to give an example for that because, at this point, you can probably figure it out by yourself.
+
+## Hover Effects
+
+## GSAP's Observer
+
+## Video
+
+## Audio
 
 ## 3D Models
 
-## Animated Infographics
+## Animated Graphs
 
 ## Inspiration
 
