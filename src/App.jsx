@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { ReactLenis, useLenis } from 'lenis/react'
+import { ReactLenis } from 'lenis/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
 import GsapAnims from './GsapAnims'
@@ -27,8 +27,8 @@ function App() {
   }, [])
 
   return (
-    <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef} className='overflow-hidden'>
-
+    <main>
+      <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef} />
 
       { /* Scene 1: Basic Sticky Scene */ }
       <div id='scene-container-1' className='h-[300vh] p-[2rem]'>
@@ -165,8 +165,7 @@ function App() {
             preload='auto'
           />
       </div>
-      
-    </ReactLenis>
+    </main>
   )
 }
 

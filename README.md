@@ -84,7 +84,10 @@ function App() {
   }, [])
   
   return (
-    <ReactLenis root options={{ autoRaf: false }} ref={lenisRef} />
+	<main>
+		<ReactLenis root options={{ autoRaf: false }} ref={lenisRef} />
+		{/* Rest of Website */}
+	</main>
   )
 }
 ```
@@ -96,6 +99,7 @@ function App() {
 	- Overscroll behavior
 	- `allowNestedScroll` (nest Lenis instances)
 - Combining these features can allow for more advanced scrolling animations.
+- Do not use two `ReactLenis` tags and wrap your content inside them. It may not cause problems for your React website but if you use Next.js, it likely will.
 
 ---
 
