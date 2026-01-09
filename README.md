@@ -219,13 +219,11 @@ There is actually a second way to make an object "sticky", this time using GSAP 
 ```jsx
 gsap.to(
 	'#pinned-object',
-	{ 
-		scale: 8, 
-		ease: 'power3.out',
+	{
 		scrollTrigger: {
 			trigger: '#pinned-object',
-			start: 'top 30%',
-			end: 'top 0%',
+			start: 'top 5%',
+			end: 'top -120%',
 			scrub: true,
 			pin: true
 		},
@@ -235,13 +233,14 @@ gsap.to(
 
 - In this case, you can use `pin : true`
 - `pin` pins the `trigger` object to the viewport
-- the "pin" disengages after the object passes `end`
-- This can be used to create the "zoom effect" described later
+- The "pin" disengages after the object passes `end`
+- `start` basically defines where the object should begin to become pinned, similar to the `top` styling you need when using sticky positioning.
+- `end` defines how long you want it to stick. This replaces the need for making really tall containers to fit your sticky objects.
 
 Obviously, this raises the question: should you use `position: sticky` with basic CSS or `pin: true` with GSAP?
-- I would probably use sticky positioning for the most part because it's more rigid in where it sticks (only within its container), making it ideal for basic scenes.
-- GSAP's `pin` is best used in advanced techniques if you need to define more specifically where the object should unpin. It's ideal for pinning objects between scenes, pinning multiple objects and unpinning them at different points, etc.
-- Often it's just up to preference.
+- GSAP's pin is really the better option but it can trickier to use. It doesnt require you to make the sticky object's container tall enough for as much scrolling as you want, you can just pin the container in the viewport for as long as you need. Because of this, it's much more flexible for different screen sizes than setups using sticky positioning and it makes for better advanced scenes.
+- Sticky positioning is still very good for scenes where you have one sticky object and multiple non-sticky objects scrolling past it.
+- My recommendation is that you always try to use GSAP's `pin` as much as possible.
 
 Also from now on, I will refer to elements using `position: sticky` as being "sticky" and elements using GSAP's `pin` as being "pinned".
 
@@ -458,9 +457,29 @@ This section is for discussing transitions in general. If you look at the demo, 
 
 ### Sliding Transitions
 
-## Hover Effects
+## Hover Animations
 
-## GSAP's Observer
+You can use GSAP's Observer plugin to make hover animations easy. Observer has lots of other uses as well too.
+
+```jsx
+import { Observer } from 'gsap/Observer';
+import gsap from 'gsap';
+
+gsap.registerPlugin(Observer);
+
+const element = document.getElementById('my-element');
+
+Observer.create({
+  target: element,
+  type: "touch, pointer",
+  onHover: () => {
+    gsap.to(element, { scale: 1.1, duration: 0.3, ease: 'power2.out' });
+  },
+  onHoverEnd: () => {
+    gsap.to(element, { scale: 1, duration: 0.3, ease: 'power2.inOut' });
+  }
+});
+```
 
 ## Video
 
@@ -476,6 +495,7 @@ if (video) {
 				start: 'top 50%',
 				end: 'bottom -50%',
 				scrub: true,
+				pin: true,
 				onUpdate: self => {
 					video.currentTime = self.progress * video.duration;
 				}

@@ -123,7 +123,7 @@ function App() {
         { /* Curved Cover Transition & Parallax Text */ }
         <div id='curved-cover' className='absolute -top-[20vh] w-full h-[25vh] bg-black rounded-t-[50%]'/>
         <div id='main-scene-5' className='h-[100vh] flex flex-col items-center justify-center'>
-          <h1 id='parallax-header' className="text-4xl font-bold text-fuchsia-500 bg-linear-to-r from-fuchsia-500 via-orange-400 to-pink-300 bg-clip-text text-transparent">Next Scene</h1>
+          <h1 id='parallax-header' className="text-4xl font-bold bg-linear-to-r from-fuchsia-500 via-orange-400 to-pink-300 bg-clip-text text-transparent">Next Scene</h1>
           <div className='w-[50%]'>
             <p id='parallax-text-1' className="mt-10 text-xl text-gray-700 font-medium">Here's some more parallax, but on text. I also added some scaling.</p>
             <p id='parallax-text-2' className="mt-5 text-xs text-gray-700 font-medium">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
@@ -165,6 +165,14 @@ function App() {
             preload='auto'
           />
       </div>
+
+      <div id='scene-container-9' className='w-full h-2.5 bg-white'>
+        <div
+          id='pinned-object-9'
+          className='w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto'
+        />
+      </div>
+      <div className='w-full h-[100vh] bg-fuchsia-500'></div>
     </main>
   )
 }

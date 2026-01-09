@@ -216,4 +216,15 @@ export default function GsapAnims() {
       });
     });
   }
+
+  gsap.to('#scene-container-9', {
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#scene-container-9',
+      start: 'top 50%',
+      end: 'top 0%',
+      scrub: true,
+      pin: true
+    }
+  });
 }
