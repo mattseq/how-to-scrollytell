@@ -75,7 +75,7 @@ function App() {
   
   useEffect(() => {
     function update(time) {
-      lenisRef.current?.lenis?.raf(time * 1000)
+      lenisRef.current?.lenis?.raf(performance.now())
     }
   
     gsap.ticker.add(update)
@@ -99,7 +99,7 @@ function App() {
 	- Overscroll behavior
 	- `allowNestedScroll` (nest Lenis instances)
 - Combining these features can allow for more advanced scrolling animations.
-- Do not use two `ReactLenis` tags and wrap your content inside them. It may not cause problems for your React website but if you use Next.js, it likely will.
+- You do not need to wrap the `ReactLenis` component around your content.
 
 ---
 
@@ -449,7 +449,7 @@ card_tl.to(card,
 
 ## Horizontal Scroll
 
-There's one main way to do horizontal scrolling and that's not to do it at all. You can make the illusion of horizontal scrolling by making the container sticky so that it stays in the viewport and making animations happen as you scroll. This also gives you a bit more control. The problem with actual horizontal scrolling is that, by default you can't just scroll as usual. You need to press shift then scroll. We obviously don't want that. There are workarounds and maybe even ways to do it cleanly, I just haven't tried to figure it out yet.
+There's one main way to do horizontal scrolling and that's not to do it at all. You can make the illusion of horizontal scrolling by pinning the container so that it stays in the viewport and making animations happen as you scroll. This also gives you a bit more control. The problem with actual horizontal scrolling is that, by default you can't just scroll as usual. You need to press shift then scroll. We obviously don't want that. There are workarounds and maybe even ways to do it cleanly, I just haven't tried to figure it out yet.
 
 ## Transitions
 
@@ -509,11 +509,72 @@ if (video) {
 - `video` refers to the `<video />` element.
 - `self.progress` is a percentage which we multiply by the total `video.duration`
 
-## Audio
-
 ## 3D Models
 
+The most popular library using 3D models in websites is Three.js. For React we install both the core engine, the React framework, and another helper library:
+`npm install three @react-three/fiber @react-three/drei`
+
+Some common imports include:
+```jsx
+import { Canvas } from '@react-three/fiber'
+import { useGLTF, useAnimations } from '@react-three/drei'
+```
+- `Canvas` is a React component that you must use to wrap your 3D scene.
+- `useGLTF` is a function that allows you to use model files.
+- `useAnimations` is another function that allows you to extract animations and play them.
+
+Here's an example of importing a model and playing an animation on scroll:
+```jsx
+export default function Model() {
+	const { scene, animations } = useGLTF('/model.glb');
+	const { actions } = useAnimations(animations, model);
+
+	useEffect(() => {
+		if (actions['idle']) {
+			actions['idle'].play();
+			actions['idle'].paused = true;
+		}
+
+		gsap.to(actions['idle'], {
+			time: actions['idle'].getClip().duration,
+			ease: "none",
+			scrollTrigger: {
+				trigger: "#canvas",
+				start: "top 60%",
+				end: "bottom top",
+				scrub: true
+			}
+		})
+
+		return () => {
+			if (actions['idle']) actions['idle'].stop();
+		}
+	}, [actions]);
+
+	return (
+		<primitive object={scene} scale={0.5} rotation={[0, Math.PI, 0]} />
+	)
+}
+```
+- We start playing the animation and pause it so that we can animate the its current position.
+- We use GSAP and ScrollTrigger to animate the animation's time from its initial starting point to the full time.
+- Return cleanup inside the useEffect
+- use React Three Fiber's `primitive` element and set the object to `scene`.
+- Do any necessary transformations here.
+
+Now we use this model component inside our main canvas:
+```jsx
+<Canvas id='canvas' >
+	<directionalLight intensity={3} position={[-1, 4, 5]} />
+	<Model />
+</Canvas>
+```
+- Canvas wraps all the Three.js components.
+- You need a light in the scene. You can use either `ambientLight` or `directionalLight`. Consider having multiple directional lights.
+
 ## Animated Graphs
+
+## Audio
 
 ## Inspiration
 

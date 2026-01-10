@@ -5,6 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
 import GsapAnims from './GsapAnims'
 import codingGif from './assets/coding-gif.mp4'
+import { Canvas } from '@react-three/fiber'
+import Model from './Model'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -13,7 +15,7 @@ function App() {
 
   useEffect(() => {
     function update(time) {
-      lenisRef.current?.lenis?.raf(time * 1000)
+      lenisRef.current?.lenis?.raf(performance.now());
     }
   
     gsap.ticker.add(update)
@@ -172,7 +174,13 @@ function App() {
           className='w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto'
         />
       </div>
-      <div className='w-full h-[100vh] bg-fuchsia-500'></div>
+      <div id='scene-container-10' className='w-full flex flex-row h-[200vh] bg-black'>
+        <Canvas id='canvas' className='align-start' camera={[0, 0, 0]} >
+          <directionalLight intensity={3} position={[-1, 4, 5]} />
+          <Model />
+        </Canvas>
+        
+      </div>
     </main>
   )
 }
