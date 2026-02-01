@@ -1,11 +1,12 @@
 import gsap from 'gsap'
-import { ScrollTrigger, SplitText, DrawSVGPlugin, MorphSVGPlugin, ScrambleTextPlugin } from 'gsap/all'
+import { ScrollTrigger, SplitText, DrawSVGPlugin, MorphSVGPlugin, ScrambleTextPlugin, Flip } from 'gsap/all'
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(DrawSVGPlugin);
 gsap.registerPlugin(MorphSVGPlugin) 
 gsap.registerPlugin(ScrambleTextPlugin);
+gsap.registerPlugin(Flip);
 
 export default function GsapAnims() {
 
@@ -226,5 +227,71 @@ export default function GsapAnims() {
       scrub: true,
       pin: true
     }
+  });
+
+  gsap.to("#scene-container-10",
+    {
+      scrollTrigger: {
+        trigger: "#scene-container-10",
+        start: "top top",
+        end: "top -200%",
+        pin: true,
+        scrub: true,
+      }
+    }
+  );
+
+  // const second_state = Flip.getState("#flip-container-2");
+
+  // const state = Flip.getState("#flip-box");
+  // const target = document.getElementById("flip-box");
+  // const parent = target.parentElement;
+  // const newParent = parent.id === "flip-container-1" ? document.getElementById("flip-container-2") : document.getElementById("flip-container-1");
+  // newParent.appendChild(target);
+
+
+  const flipAnim = gsap.timeline();
+  flipAnim.addLabel("first");
+
+  flipAnim.add(
+    Flip.fit("#flip-box", "#flip-container-2", {
+      duration: 1,
+      ease: "power1.inOut",
+      // absolute: true,
+      // spin: true
+    })
+  );
+
+  flipAnim.addLabel("second");
+
+  flipAnim.add(
+    Flip.fit("#flip-box", "#flip-container-3", {
+      duration: 1,
+      ease: "power1.inOut",
+      // absolute: true,
+      // spin: true
+    })
+  );
+
+  flipAnim.addLabel("third");
+
+  flipAnim.add(
+    Flip.fit("#flip-box", "#scene-container-12", {
+      duration: 1,
+      ease: "power1.inOut",
+      // absolute: true,
+      // spin: true
+    })
+  );
+
+  flipAnim.addLabel("zoom");
+
+  ScrollTrigger.create({
+    trigger: "#scene-container-11",
+    animation: flipAnim,
+    scrub: true,
+    start: "top top",
+    end: "top -300%",
+    snap: { snapTo: "labels", duration: {min: 0.2, max: 0.3}, delay: 0.1 }
   });
 }

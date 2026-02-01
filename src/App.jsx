@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ReactLenis } from 'lenis/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollTrigger, Flip } from 'gsap/all'
 import './App.css'
 import GsapAnims from './GsapAnims'
 import codingGif from './assets/coding-gif.mp4'
@@ -9,6 +9,7 @@ import { Canvas } from '@react-three/fiber'
 import Model from './Model'
 
 gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(Flip)
 
 function App() {
   const lenisRef = useRef()
@@ -40,7 +41,7 @@ function App() {
         { /* Sticky Object */ }
         <div
           id='sticky-object-1'
-          className='box w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto sticky top-[30%]'
+          className='w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto sticky top-[30%]'
         />
 
         { /* Non-Sticky Object */ }
@@ -148,7 +149,7 @@ function App() {
         <div className='overflow-hidden sticky top-0 w-full'>
           <div id='scene-container-6' className='sticky top-0 w-full h-screen p-[2rem] bg-green-500 rounded-bl-[50%]'>
             <h1 className='text-4xl font-bold text-white'>Scene</h1>
-            <p className='mt-10 text-xl text-white font-medium'>This is the scene that slides in from the right after the card stack animation finishes.</p>
+            <p className='mt-10 text-xl text-white font-medium'>Just kidding i dont use arch, i use alpine bc its smol</p>
           </div>
         </div>
       </div>
@@ -167,20 +168,50 @@ function App() {
             preload='auto'
           />
       </div>
-
-      <div id='scene-container-9' className='w-full h-2.5 bg-white'>
-        <div
-          id='pinned-object-9'
-          className='w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto'
-        />
-      </div>
-      <div id='scene-container-10' className='w-full flex flex-row h-[200vh] bg-black'>
+      <div id='scene-container-10' className='w-full flex flex-row h-[100vh] bg-black'>
         <Canvas id='canvas' className='align-start' camera={[0, 0, 0]} >
           <directionalLight intensity={3} position={[-1, 4, 5]} />
           <Model />
         </Canvas>
-        
       </div>
+
+      <div className='w-full h-screen'></div>
+        
+      <div id='scene-container-11' className='w-full h-fit flex flex-col'>
+          <div className='w-full h-screen flex flex-row bg-black text-white'>
+            <div className='w-1/2 h-full flex flex-col justify-center items-center'>
+              <h1 className='text-4xl font-bold text-center'>The End</h1>
+              <p className='mt-10 text-xl text-center'>Thanks for scrolling!</p>
+            </div>
+            <div className='w-1/2 h-full bg-white flex flex-col justify-center items-center'>
+              <div id='flip-box' className='w-1/4 h-1/4 bg-purple-700 rounded-2xl'></div>
+            </div>
+          </div>
+
+          <div className='w-full h-screen flex flex-row-reverse bg-black text-white'>
+            <div className='w-1/2 h-full flex flex-col justify-center items-center'>
+              <h1 className='text-4xl font-bold text-center'>The End</h1>
+              <p className='mt-10 text-xl text-center'>Thanks for scrolling!</p>
+            </div>
+            <div className='w-1/2 h-full bg-white flex flex-col justify-center items-center'>
+              <div id='flip-container-2' className='w-1/4 h-1/4 rounded-2xl'></div>
+            </div>
+          </div>
+
+          <div className='w-full h-screen flex flex-row bg-black text-white'>
+            <div className='w-1/2 h-full flex flex-col justify-center items-center'>
+              <h1 className='text-4xl font-bold text-center'>The End</h1>
+              <p className='mt-10 text-xl text-center'>Thanks for scrolling!</p>
+            </div>
+            <div className='w-1/2 h-full bg-white flex flex-col justify-center items-center'>
+              <div id='flip-container-3' className='w-1/4 h-1/4 rounded-2xl'></div>
+            </div>
+          </div>
+      </div>
+
+      <div id='scene-container-12' className='w-full h-screen'>
+      </div>
+      
     </main>
   )
 }

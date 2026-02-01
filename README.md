@@ -130,6 +130,7 @@ gsap.fromTo(
 - Second {brackets} = **animated state**
 - `start` and `end` define when the animation runs
 - `scrub` allows animations to play **forward and backward** with scroll
+	- `scrub` also accepts values, which creates a small delay on the scrub.
 
 ---
 ## Separating GSAP Animations from Main Code
@@ -398,13 +399,14 @@ gsap.utils.toArray('.parallax-layer-1').forEach((parallaxObject, i) => {
 			trigger: '#scene-container-4',
 			start: 'top bottom',
 			end: 'bottom top',
-			scrub: true,
+			scrub: 1.5,
 		}
 	});
 });
 ```
 - With this code, any element with the class name of `.parallax-layer-1` will move upwards at one speed and we can make the next layer animate at a different speed, creating a parallax effect.
 - Just to clarify, `layerSpeed` is not technically a speed - it's the distance the object should cover between the `start` and `end` listed.
+- `scrub` is set to a value like 1.5 to give it a short delay.
 
 ---
 
@@ -572,6 +574,49 @@ Now we use this model component inside our main canvas:
 - Canvas wraps all the Three.js components.
 - You need a light in the scene. You can use either `ambientLight` or `directionalLight`. Consider having multiple directional lights.
 
+## GSAP Flip
+
+GSAP's Flip plugin is one of the most powerful tools available for scrollytelling although its name is somewhat misleading.
+FLIP stands for First, Last, Invert, Play.
+It allows you to animate complex transformations on elements, which includes reparenting them.
+
+A simple Flip method to use is `Flip.fit()` which fits one element to the exact dimensions of the other.
+```jsx
+const flipAnim = gsap.timeline();
+flipAnim.addLabel("first");
+
+flipAnim.add(
+	Flip.fit("#flip-box", "#flip-container-2", {
+		duration: 1,
+		ease: "power1.inOut"
+	})
+);
+
+flipAnim.addLabel("second");
+
+flipAnim.add(
+	Flip.fit("#flip-box", "#flip-container-3", {
+		duration: 1,
+		ease: "power1.inOut"
+	})
+);
+
+flipAnim.addLabel("third");
+
+ScrollTrigger.create({
+	trigger: "#scene-container-11",
+	animation: flipAnim,
+	scrub: true,
+	start: "top top",
+	end: "top -200%",
+	markers: true,
+	snap: { snapTo: "labels", duration: {min: 0.2, max: 0.3}, delay: 0.1 }
+});
+```
+- We can use a timeline to use multiple Flip animations in a row.
+- `#flip-box` will animate to fit `#flip-container-2`, then `#flip-container-3`
+- You can also use snapping with labels so that when the user stops scrolling, the viewport snaps to the nearest label in the timeline.
+
 ## Animated Graphs
 
 ## Audio
@@ -579,3 +624,5 @@ Now we use this model component inside our main canvas:
 ## Inspiration
 
 For inspiration for your next - or first - scrollytelling project, take a look at [GSAP's showcase](https://gsap.com/showcase/).
+
+For cool animations to use, check out [GSAP's demos](https://demos.gsap.com/explore/).
