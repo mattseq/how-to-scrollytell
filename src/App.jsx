@@ -1,219 +1,311 @@
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ReactLenis } from 'lenis/react'
-import { ScrollTrigger, Flip } from 'gsap/all'
-import './App.css'
-import GsapAnims from './GsapAnims'
-import codingGif from './assets/coding-gif.mp4'
-import { Canvas } from '@react-three/fiber'
-import Model from './Model'
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ReactLenis } from "lenis/react";
+import { ScrollTrigger, Flip } from "gsap/all";
+import "./App.css";
+import GsapAnims from "./GsapAnims";
+import codingGif from "./assets/coding-gif.mp4";
+import { Canvas } from "@react-three/fiber";
+import Model from "./Model";
 
-gsap.registerPlugin(ScrollTrigger)
-gsap.registerPlugin(Flip)
+gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(Flip);
 
 function App() {
-  const lenisRef = useRef()
+  const lenisRef = useRef();
 
   useEffect(() => {
     function update(time) {
       lenisRef.current?.lenis?.raf(performance.now());
     }
-  
-    gsap.ticker.add(update)
+
+    gsap.ticker.add(update);
 
     GsapAnims();
 
     return () => {
       ScrollTrigger.killAll();
-      gsap.ticker.remove(update)
-    }
-  }, [])
+      gsap.ticker.remove(update);
+    };
+  }, []);
 
   return (
     <main>
       <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef} />
 
-      { /* Scene 1: Basic Sticky Scene */ }
-      <div id='scene-container-1' className='h-[300vh] p-[2rem]'>
+      {/* Scene 1: Basic Sticky Scene */}
+      <div id="scene-container-1" className="h-[300vh] p-[2rem]">
         <h1>Basic Sticky Scene</h1>
-        <div className='h-screen' />
+        <div className="h-screen" />
 
-        { /* Sticky Object */ }
+        {/* Sticky Object */}
         <div
-          id='sticky-object-1'
-          className='w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto sticky top-[30%]'
+          id="sticky-object-1"
+          className="w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto sticky top-[30%]"
         />
 
-        { /* Non-Sticky Object */ }
-        <p
-          id='non-sticky-object-1'
-          className='text-left text-2xl ml-20'
-        >
+        {/* Non-Sticky Object */}
+        <p id="non-sticky-object-1" className="text-left text-2xl ml-20">
           Hello there.
         </p>
-
       </div>
 
-      { /* Scene 2: Text Effect and Zoom */ }
-      <div id='scene-container-2' className='h-[300vh] p-[2rem] mt-20 overflow-hidden'>
-        <h1 id='title'>Text Effect and Zoom</h1>
-        <div className='h-screen' />
+      {/* Scene 2: Text Effect and Zoom */}
+      <div
+        id="scene-container-2"
+        className="h-[300vh] p-[2rem] mt-20 overflow-hidden"
+      >
+        <h1 id="title">Text Effect and Zoom</h1>
+        <div className="h-screen" />
 
-        { /* Zooming Sticky Object */ }
+        {/* Zooming Sticky Object */}
         <div
-          id='sticky-object-2'
-          className='box w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto'
+          id="sticky-object-2"
+          className="box w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto"
         />
-
       </div>
 
+      {/* Scene 3: SVG Draw and Morph */}
+      <div
+        id="scene-container-3"
+        className="h-[400vh] p-[2rem] bg-fuchsia-500 flex flex-row items-center"
+      >
+        <h1 className="sticky top-[50%]">SVG Draw and Morph</h1>
 
-      { /* Scene 3: SVG Draw and Morph */ }
-      <div id='scene-container-3' className='h-[400vh] p-[2rem] bg-fuchsia-500 flex flex-row items-center'>
-        <h1 className='sticky top-[50%]'>SVG Draw and Morph</h1>
-
-        { /* DrawSVG Sticky Object */ }
-        <svg id="draw-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 103 103" fill="none" strokeWidth="2.2" opacity="1" className='size-100 sticky top-40 ml-20'>
+        {/* DrawSVG Sticky Object */}
+        <svg
+          id="draw-svg"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="-1 -1 103 103"
+          fill="none"
+          strokeWidth="2.2"
+          opacity="1"
+          className="size-100 sticky top-40 ml-20"
+        >
           <defs>
-            <linearGradient id="grad-1" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="grad-1"
+              x1="0"
+              y1="0"
+              x2="100"
+              y2="100"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop offset="0.2" stopColor="rgb(255, 135, 9)"></stop>
               <stop offset="0.8" stopColor="rgb(247, 189, 248)"></stop>
             </linearGradient>
           </defs>
-          <path stroke="url(#grad-1)" d="M50.5 50.5h50v50s-19.2 1.3-37.2-16.7S56 35.4 35.5 15.5C18.5-1 .5.5.5.5v50h50s25.6-.6 38-18 12-32 12-32h-50v100H.5S.2 80.7 11.8 68.2 40 49.7 50.5 50.5Z" />
+          <path
+            stroke="url(#grad-1)"
+            d="M50.5 50.5h50v50s-19.2 1.3-37.2-16.7S56 35.4 35.5 15.5C18.5-1 .5.5.5.5v50h50s25.6-.6 38-18 12-32 12-32h-50v100H.5S.2 80.7 11.8 68.2 40 49.7 50.5 50.5Z"
+          />
         </svg>
 
-        { /* MorphSVG Sticky Button */ }
-        <button className='sticky size-20 top-100 ml-20'
+        {/* MorphSVG Sticky Button */}
+        <button
+          className="sticky size-20 top-100 ml-20"
           onClick={() =>
-            gsap.to(
-              '#initial-morph-svg',
-              {
-                ease: 'expo.inOut',
-                morphSVG: '#final-morph-svg',
-                duration: 1
-              }
-            )
+            gsap.to("#initial-morph-svg", {
+              ease: "expo.inOut",
+              morphSVG: "#final-morph-svg",
+              duration: 1,
+            })
           }
         >
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='size-10'>
-            <path id='initial-morph-svg' d="M22.7048 4.95406C22.3143 4.56353 21.6811 4.56353 21.2906 4.95406L8.72696 17.5177C8.33643 17.9082 7.70327 17.9082 7.31274 17.5177L2.714 12.919C2.32348 12.5284 1.69031 12.5284 1.29979 12.919C0.909266 13.3095 0.909265 13.9427 1.29979 14.3332L5.90392 18.9289C7.07575 20.0986 8.97367 20.0978 10.1445 18.9271L22.7048 6.36827C23.0953 5.97775 23.0953 5.34458 22.7048 4.95406Z" fill="#0F0F0F"/>
-            <path className='hidden' id='final-morph-svg' d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z" fill="#0F0F0F"/>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="size-10"
+          >
+            <path
+              id="initial-morph-svg"
+              d="M22.7048 4.95406C22.3143 4.56353 21.6811 4.56353 21.2906 4.95406L8.72696 17.5177C8.33643 17.9082 7.70327 17.9082 7.31274 17.5177L2.714 12.919C2.32348 12.5284 1.69031 12.5284 1.29979 12.919C0.909266 13.3095 0.909265 13.9427 1.29979 14.3332L5.90392 18.9289C7.07575 20.0986 8.97367 20.0978 10.1445 18.9271L22.7048 6.36827C23.0953 5.97775 23.0953 5.34458 22.7048 4.95406Z"
+              fill="#0F0F0F"
+            />
+            <path
+              className="hidden"
+              id="final-morph-svg"
+              d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z"
+              fill="#0F0F0F"
+            />
           </svg>
         </button>
-
       </div>
-      
 
-      { /* Scene 4: Parallax Effect */ }
-      <div id='scene-container-4' className='h-[300vh] p-[2rem] bg-fuchsia-500'>
-        <h1 className='mt-100'>Parallax</h1>
+      {/* Scene 4: Parallax Effect */}
+      <div id="scene-container-4" className="h-[300vh] p-[2rem] bg-fuchsia-500">
+        <h1 className="mt-100">Parallax</h1>
 
-        { /* Parallax Objects */ }
-        <div className='parallax-container mt-100'>
-          <div className='parallax w-[150px] h-[150px] bg-white rounded-3xl mx-auto mb-30' />
-          <div className='parallax w-[100px] h-[100px] bg-gray-300 rounded-3xl mx-auto mb-30' />
-          <div className='parallax w-[75px] h-[75px] bg-gray-500 rounded-3xl mx-auto mb-30' />
-          <div className='parallax w-[50px] h-[50px] bg-gray-700 rounded-3xl mx-auto mb-30' />
+        {/* Parallax Objects */}
+        <div className="parallax-container mt-100">
+          <div className="parallax w-[150px] h-[150px] bg-white rounded-3xl mx-auto mb-30" />
+          <div className="parallax w-[100px] h-[100px] bg-gray-300 rounded-3xl mx-auto mb-30" />
+          <div className="parallax w-[75px] h-[75px] bg-gray-500 rounded-3xl mx-auto mb-30" />
+          <div className="parallax w-[50px] h-[50px] bg-gray-700 rounded-3xl mx-auto mb-30" />
         </div>
-        
+
         <h1>Take a look at this curved transition!</h1>
       </div>
 
-      { /* Scene 5: Curved Cover Transition, Card Stack, and Text Scramble */ }
-      <div id='scene-container-5' className='w-full h-[500vh] relative bg-black'>
-
-        { /* Curved Cover Transition & Parallax Text */ }
-        <div id='curved-cover' className='absolute -top-[20vh] w-full h-[25vh] bg-black rounded-t-[50%]'/>
-        <div id='main-scene-5' className='h-[100vh] flex flex-col items-center justify-center'>
-          <h1 id='parallax-header' className="text-4xl font-bold bg-linear-to-r from-fuchsia-500 via-orange-400 to-pink-300 bg-clip-text text-transparent">Next Scene</h1>
-          <div className='w-[50%]'>
-            <p id='parallax-text-1' className="mt-10 text-xl text-gray-700 font-medium">Here's some more parallax, but on text. I also added some scaling.</p>
-            <p id='parallax-text-2' className="mt-5 text-xs text-gray-700 font-medium">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+      {/* Scene 5: Curved Cover Transition, Card Stack, and Text Scramble */}
+      <div
+        id="scene-container-5"
+        className="w-full h-[500vh] relative bg-black"
+      >
+        {/* Curved Cover Transition & Parallax Text */}
+        <div
+          id="curved-cover"
+          className="absolute -top-[20vh] w-full h-[25vh] bg-black rounded-t-[50%]"
+        />
+        <div
+          id="main-scene-5"
+          className="h-[100vh] flex flex-col items-center justify-center"
+        >
+          <h1
+            id="parallax-header"
+            className="text-4xl font-bold bg-linear-to-r from-fuchsia-500 via-orange-400 to-pink-300 bg-clip-text text-transparent"
+          >
+            Next Scene
+          </h1>
+          <div className="w-[50%]">
+            <p
+              id="parallax-text-1"
+              className="mt-10 text-xl text-gray-700 font-medium"
+            >
+              Here's some more parallax, but on text. I also added some scaling.
+            </p>
+            <p
+              id="parallax-text-2"
+              className="mt-5 text-xs text-gray-700 font-medium"
+            >
+              Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
+              faucibus ex sapien vitae pellentesque sem placerat. In id cursus
+              mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
+              urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
+              egestas. Iaculis massa nisl malesuada lacinia integer nunc
+              posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad
+              litora torquent per conubia nostra inceptos himenaeos.
+            </p>
           </div>
         </div>
 
-        { /* Card Stack and Text Scramble */ }
-        <div className="sticky top-0 w-full h-screen flex items-center justify-center gap-10 overflow-hidden" id="card-stack">
-          <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 1</div>
-          <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 2</div>
-          <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 3</div>
-          <div className='card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500'>Card 4</div>
+        {/* Card Stack and Text Scramble */}
+        <div
+          className="sticky top-0 w-full h-screen flex items-center justify-center gap-10 overflow-hidden"
+          id="card-stack"
+        >
+          <div className="card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500">
+            Card 1
+          </div>
+          <div className="card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500">
+            Card 2
+          </div>
+          <div className="card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500">
+            Card 3
+          </div>
+          <div className="card flex gap-10 w-64 h-96 bg-white rounded-2xl shadow-lg items-center justify-center text-2xl font-bold outline-3 outline-fuchsia-500">
+            Card 4
+          </div>
         </div>
-        <p id='appear-text' className='sticky top-[50%] text-white text-2xl text-center'></p>
+        <p
+          id="appear-text"
+          className="sticky top-[50%] text-white text-2xl text-center"
+        ></p>
 
-        { /* 
+        {/* 
           Scene that slides in from the top right. Unlike the previous transition, it's still inside the previous scene container.
           Also it uses a wrapper to prevent overflow issues.
-        */ }
-        <div className='overflow-hidden sticky top-0 w-full'>
-          <div id='scene-container-6' className='sticky top-0 w-full h-screen p-[2rem] bg-green-500 rounded-bl-[50%]'>
-            <h1 className='text-4xl font-bold text-white'>Scene</h1>
-            <p className='mt-10 text-xl text-white font-medium'>Just kidding i dont use arch, i use alpine bc its smol</p>
+        */}
+        <div className="overflow-hidden sticky top-0 w-full">
+          <div
+            id="scene-container-6"
+            className="sticky top-0 w-full h-screen p-[2rem] bg-green-500 rounded-bl-[50%]"
+          >
+            <h1 className="text-4xl font-bold text-white">Scene</h1>
+            <p className="mt-10 text-xl text-white font-medium">
+              Just kidding i dont use arch, i use alpine bc its smol
+            </p>
           </div>
         </div>
       </div>
 
-      { /* Scene 7: Filler scene for some spacing and gradient */ }
-      <div id='scene-container-7' className='flex flex-col w-full h-[300vh] bg-linear-to-b from-green-500 to-[#0c0a0b]'></div>
-      
-      { /* Scene 8: Video */ }
-      <div id='scene-container-8' className='flex flex-col items-center justify-center w-full h-[500vh] bg-[#0c0a0b]'>
-          <video
-            id='video'
-            className='sticky top-0 size-150 object-cover'
-            src={codingGif}
-            muted
-            playsInline
-            preload='auto'
-          />
+      {/* Scene 7: Filler scene for some spacing and gradient */}
+      <div
+        id="scene-container-7"
+        className="flex flex-col w-full h-[300vh] bg-linear-to-b from-green-500 to-[#0c0a0b]"
+      ></div>
+
+      {/* Scene 8: Video */}
+      <div
+        id="scene-container-8"
+        className="flex flex-col items-center justify-center w-full h-[500vh] bg-[#0c0a0b]"
+      >
+        <video
+          id="video"
+          className="sticky top-0 size-150 object-cover"
+          src={codingGif}
+          muted
+          playsInline
+          preload="auto"
+        />
       </div>
-      <div id='scene-container-10' className='w-full flex flex-row h-[100vh] bg-black'>
-        <Canvas id='canvas' className='align-start' camera={[0, 0, 0]} >
+      <div
+        id="scene-container-10"
+        className="w-full flex flex-row h-[100vh] bg-black"
+      >
+        <Canvas id="canvas" className="align-start" camera={[0, 0, 0]}>
           <directionalLight intensity={3} position={[-1, 4, 5]} />
           <Model />
         </Canvas>
       </div>
 
-      <div className='w-full h-screen'></div>
-        
-      <div id='scene-container-11' className='w-full h-fit flex flex-col'>
-          <div className='w-full h-screen flex flex-row bg-black text-white'>
-            <div className='w-1/2 h-full flex flex-col justify-center items-center'>
-              <h1 className='text-4xl font-bold text-center'>The End</h1>
-              <p className='mt-10 text-xl text-center'>Thanks for scrolling!</p>
-            </div>
-            <div className='w-1/2 h-full bg-white flex flex-col justify-center items-center'>
-              <div id='flip-box' className='w-1/4 h-1/4 bg-purple-700 rounded-2xl'></div>
-            </div>
-          </div>
+      <div className="w-full h-screen"></div>
 
-          <div className='w-full h-screen flex flex-row-reverse bg-black text-white'>
-            <div className='w-1/2 h-full flex flex-col justify-center items-center'>
-              <h1 className='text-4xl font-bold text-center'>The End</h1>
-              <p className='mt-10 text-xl text-center'>Thanks for scrolling!</p>
-            </div>
-            <div className='w-1/2 h-full bg-white flex flex-col justify-center items-center'>
-              <div id='flip-container-2' className='w-1/4 h-1/4 rounded-2xl'></div>
-            </div>
+      <div id="scene-container-11" className="w-full h-fit flex flex-col">
+        <div className="w-full h-screen flex flex-row bg-black text-white">
+          <div className="w-1/2 h-full flex flex-col justify-center items-center">
+            <h1 className="text-4xl font-bold text-center">The End</h1>
+            <p className="mt-10 text-xl text-center">Thanks for scrolling!</p>
           </div>
+          <div className="w-1/2 h-full bg-white flex flex-col justify-center items-center">
+            <div
+              id="flip-box"
+              className="w-1/4 h-1/4 bg-purple-700 rounded-2xl"
+            ></div>
+          </div>
+        </div>
 
-          <div className='w-full h-screen flex flex-row bg-black text-white'>
-            <div className='w-1/2 h-full flex flex-col justify-center items-center'>
-              <h1 className='text-4xl font-bold text-center'>The End</h1>
-              <p className='mt-10 text-xl text-center'>Thanks for scrolling!</p>
-            </div>
-            <div className='w-1/2 h-full bg-white flex flex-col justify-center items-center'>
-              <div id='flip-container-3' className='w-1/4 h-1/4 rounded-2xl'></div>
-            </div>
+        <div className="w-full h-screen flex flex-row-reverse bg-black text-white">
+          <div className="w-1/2 h-full flex flex-col justify-center items-center">
+            <h1 className="text-4xl font-bold text-center">The End</h1>
+            <p className="mt-10 text-xl text-center">Thanks for scrolling!</p>
           </div>
+          <div className="w-1/2 h-full bg-white flex flex-col justify-center items-center">
+            <div
+              id="flip-container-2"
+              className="w-1/4 h-1/4 rounded-2xl"
+            ></div>
+          </div>
+        </div>
+
+        <div className="w-full h-screen flex flex-row bg-black text-white">
+          <div className="w-1/2 h-full flex flex-col justify-center items-center">
+            <h1 className="text-4xl font-bold text-center">The End</h1>
+            <p className="mt-10 text-xl text-center">Thanks for scrolling!</p>
+          </div>
+          <div className="w-1/2 h-full bg-white flex flex-col justify-center items-center">
+            <div
+              id="flip-container-3"
+              className="w-1/4 h-1/4 rounded-2xl"
+            ></div>
+          </div>
+        </div>
       </div>
 
-      <div id='scene-container-12' className='w-full h-screen'>
-      </div>
-      
+      <div id="scene-container-12" className="w-full h-screen"></div>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;

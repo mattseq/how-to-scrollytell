@@ -1,48 +1,51 @@
-import gsap from 'gsap'
-import { ScrollTrigger, SplitText, DrawSVGPlugin, MorphSVGPlugin, ScrambleTextPlugin, Flip } from 'gsap/all'
+import gsap from "gsap";
+import {
+  ScrollTrigger,
+  SplitText,
+  DrawSVGPlugin,
+  MorphSVGPlugin,
+  ScrambleTextPlugin,
+  Flip,
+} from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(DrawSVGPlugin);
-gsap.registerPlugin(MorphSVGPlugin) 
+gsap.registerPlugin(MorphSVGPlugin);
 gsap.registerPlugin(ScrambleTextPlugin);
 gsap.registerPlugin(Flip);
 
 export default function GsapAnims() {
-
   // Scene 1: Basic Sticky Scene Animation
   gsap.fromTo(
-    '#sticky-object-1',
+    "#sticky-object-1",
     { opacity: 0, x: -500, scale: 0.5 },
     {
       opacity: 1,
       x: 0,
       scale: 1,
-      ease: 'power3.out',
+      ease: "power3.out",
       scrollTrigger: {
-        trigger: '#sticky-object-1',
-        start: 'top 80%',
-        end: 'top 30%',
+        trigger: "#sticky-object-1",
+        start: "top 80%",
+        end: "top 30%",
         scrub: true,
-      },
-    }
-  )
-
-  // Scene 2: Zoom Animation
-  gsap.to(
-    '#sticky-object-2',
-    { 
-      scale: 8, 
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '#sticky-object-2',
-        start: 'top 50%',
-        end: 'top -100%',
-        scrub: true,
-        pin: true
       },
     },
-  )
+  );
+
+  // Scene 2: Zoom Animation
+  gsap.to("#sticky-object-2", {
+    scale: 8,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: "#sticky-object-2",
+      start: "top 50%",
+      end: "top -100%",
+      scrub: true,
+      pin: true,
+    },
+  });
 
   // Scene 2: Text Animation
   SplitText.create("#title", {
@@ -53,43 +56,43 @@ export default function GsapAnims() {
       return gsap.from(self.words, {
         scrollTrigger: {
           trigger: "#title",
-          start: 'top 80%',
-          end: 'top 40%',
+          start: "top 80%",
+          end: "top 40%",
           scrub: true,
         },
-        y: 100, 
-        autoAlpha: 0, 
-        stagger: 0.25
+        y: 100,
+        autoAlpha: 0,
+        stagger: 0.25,
       });
-    }
+    },
   });
 
   // Scene 3: SVG Draw Animation
   gsap.fromTo(
-    '#draw-svg path',
-    { drawSVG: '0%'},
+    "#draw-svg path",
+    { drawSVG: "0%" },
     {
       scrollTrigger: {
-        trigger: '#draw-svg',
-        start: 'top 100%',
-        end: 'top -100%',
+        trigger: "#draw-svg",
+        start: "top 100%",
+        end: "top -100%",
         scrub: true,
       },
-      drawSVG: '100%'
-    }
+      drawSVG: "100%",
+    },
   );
 
   // Scene 4: Parallax Effect
-  gsap.utils.toArray('.parallax').forEach((parallaxObject, i) => {
+  gsap.utils.toArray(".parallax").forEach((parallaxObject, i) => {
     gsap.to(parallaxObject, {
       y: (i + 1) * -300,
-      ease: 'none',
+      ease: "none",
       scrollTrigger: {
-        trigger: '#scene-container-4',
-        start: 'top bottom',
-        end: 'bottom top',
+        trigger: "#scene-container-4",
+        start: "top bottom",
+        end: "bottom top",
         scrub: true,
-      }
+      },
     });
   });
 
@@ -102,9 +105,9 @@ export default function GsapAnims() {
       start: "top 50%",
       end: "top top",
       scrub: true,
-    }
+    },
   });
-  
+
   // Scene 5: Parallax Text
   gsap.to("#parallax-header", {
     y: -50,
@@ -115,7 +118,7 @@ export default function GsapAnims() {
       start: "top 70%",
       end: "bottom top",
       scrub: true,
-    }
+    },
   });
   gsap.to("#parallax-text-1", {
     y: -75,
@@ -126,7 +129,7 @@ export default function GsapAnims() {
       start: "top 50%",
       end: "bottom top",
       scrub: true,
-    }
+    },
   });
   gsap.to("#parallax-text-2", {
     y: -100,
@@ -137,118 +140,91 @@ export default function GsapAnims() {
       start: "top 30%",
       end: "bottom top",
       scrub: true,
-    }
+    },
   });
 
   // Scene 5: Card Stack, Text Scramble, and Slide-in Scene Timeline
-  gsap.utils.toArray('#card-stack .card').forEach((card, i, arr) => {
+  gsap.utils.toArray("#card-stack .card").forEach((card, i, arr) => {
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: '#card-stack',
-        start: 'top top',
-        end: 'top -300%',
+        trigger: "#card-stack",
+        start: "top top",
+        end: "top -300%",
         scrub: true,
-      }
+      },
     });
-    tl.fromTo(card, 
+    tl.fromTo(
+      card,
       { x: 1500, scale: 0 },
       {
         x: 0,
         scale: 1,
-        ease: 'power3.out',
-      }
+        ease: "power3.out",
+      },
     );
-    tl.to(card,
-      {
-        x: -280*i,
-        y: 20*i,
-        scale: 0.5,
-        ease: 'power3.inOut',
-        delay: 0.5
-      }
-    );
-    tl.to(
-      '#appear-text',
-      {
-        scrambleText: "I use Arch btw.",
-        delay: 0.5
-      }
-    );
+    tl.to(card, {
+      x: -280 * i,
+      y: 20 * i,
+      scale: 0.5,
+      ease: "power3.inOut",
+      delay: 0.5,
+    });
+    tl.to("#appear-text", {
+      scrambleText: "I use Arch btw.",
+      delay: 0.5,
+    });
     tl.fromTo(
-      '#scene-container-6',
+      "#scene-container-6",
       { xPercent: 100, yPercent: -100 },
-      { 
+      {
         xPercent: 0,
         yPercent: 0,
-        borderRadius: '0%',
-        ease: 'expo.out',
-      }
+        borderRadius: "0%",
+        ease: "expo.out",
+      },
     );
-    card
+    card;
   });
 
-  
-  const video = document.getElementById('video');
+  const video = document.getElementById("video");
   if (video) {
-    video.addEventListener('loadedmetadata', () => {
-      gsap.to(video,
-        {
-          ease: 'none',
-          scrollTrigger: {
-            trigger: video,
-            start: 'top 50%',
-            end: 'bottom 0%',
-            scrub: true,
-            onUpdate: self => {
-              video.currentTime = self.progress * video.duration;
-            }
-          }
-        }
-      );
+    video.addEventListener("loadedmetadata", () => {
+      gsap.to(video, {
+        ease: "none",
+        scrollTrigger: {
+          trigger: video,
+          start: "top 50%",
+          end: "bottom 0%",
+          scrub: true,
+          onUpdate: (self) => {
+            video.currentTime = self.progress * video.duration;
+          },
+        },
+      });
       // Fade out at the end
       gsap.to(video, {
         opacity: 0,
         scrollTrigger: {
           trigger: video,
-          start: 'bottom 10%',
-          end: 'bottom top',
+          start: "bottom 10%",
+          end: "bottom top",
           scrub: true,
-        }
+        },
       });
     });
   }
 
-  gsap.to('#scene-container-9', {
-    ease: 'none',
+  // IGNORE SCENE 9 FOR ABSOLUTELY NO REASON OTHER THAN THAT I SKIPPED THE NUMBER 9
+
+  gsap.to("#scene-container-10", {
     scrollTrigger: {
-      trigger: '#scene-container-9',
-      start: 'top 50%',
-      end: 'top 0%',
+      trigger: "#scene-container-10",
+      start: "top top",
+      end: "top -200%",
+      pin: true,
       scrub: true,
-      pin: true
-    }
+    },
   });
-
-  gsap.to("#scene-container-10",
-    {
-      scrollTrigger: {
-        trigger: "#scene-container-10",
-        start: "top top",
-        end: "top -200%",
-        pin: true,
-        scrub: true,
-      }
-    }
-  );
-
-  // const second_state = Flip.getState("#flip-container-2");
-
-  // const state = Flip.getState("#flip-box");
-  // const target = document.getElementById("flip-box");
-  // const parent = target.parentElement;
-  // const newParent = parent.id === "flip-container-1" ? document.getElementById("flip-container-2") : document.getElementById("flip-container-1");
-  // newParent.appendChild(target);
-
 
   const flipAnim = gsap.timeline();
   flipAnim.addLabel("first");
@@ -257,9 +233,7 @@ export default function GsapAnims() {
     Flip.fit("#flip-box", "#flip-container-2", {
       duration: 1,
       ease: "power1.inOut",
-      // absolute: true,
-      // spin: true
-    })
+    }),
   );
 
   flipAnim.addLabel("second");
@@ -268,9 +242,7 @@ export default function GsapAnims() {
     Flip.fit("#flip-box", "#flip-container-3", {
       duration: 1,
       ease: "power1.inOut",
-      // absolute: true,
-      // spin: true
-    })
+    }),
   );
 
   flipAnim.addLabel("third");
@@ -279,9 +251,7 @@ export default function GsapAnims() {
     Flip.fit("#flip-box", "#scene-container-12", {
       duration: 1,
       ease: "power1.inOut",
-      // absolute: true,
-      // spin: true
-    })
+    }),
   );
 
   flipAnim.addLabel("zoom");
@@ -292,6 +262,6 @@ export default function GsapAnims() {
     scrub: true,
     start: "top top",
     end: "top -300%",
-    snap: { snapTo: "labels", duration: {min: 0.2, max: 0.3}, delay: 0.1 }
+    snap: { snapTo: "labels", duration: { min: 0.2, max: 0.3 }, delay: 0.1 },
   });
 }

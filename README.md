@@ -10,6 +10,7 @@ I am not an expert in scrollytelling - I'm learning alongside you. The purpose o
 
 Scrollytelling is a storytelling technique used by websites where content changes and animates in response to the user's scroll actions. As you scroll, a story unfolds, revealing new information, triggering animations, and smoothly transitioning between scenes - creating an interactive, immersive, narrative experience.
 Some websites that implement this art form extremely well include:
+
 - [Lenis](https://lenis.darkroom.engineering/)
 - [GTA VI](https://www.rockstargames.com/VI)
 - [Getty](https://gehry.getty.edu/)
@@ -19,6 +20,7 @@ Some websites that implement this art form extremely well include:
 ## Main Libraries and Frameworks
 
 The necessary libraries and frameworks generally include:
+
 - An animation framework such as Framer Motion or GSAP
 - A smooth scroll library such as Lenis
 
@@ -30,11 +32,11 @@ In these notes, we're going to use **GSAP + Lenis** on top of **React**.
 
 - Lenis makes scrolling buttery smooth while allowing for regular CSS transforms, unlike many other smooth scrolling solutions.
 - The most important difference is that it preserves the ability to use `position: sticky` in CSS, which results in an amazing scrolling experience.
-	- Many of the elements you see on Lenis’s own website use `position: sticky`.
+  - Many of the elements you see on Lenis’s own website use `position: sticky`.
 - A good alternative for Lenis would be using GSAP's ScrollSmoother plugin because it makes things like parallax effects so much easier.
-	- "Sticky positioning" will not work if you use ScrollSmoother instead of Lenis and you will have to rely on GSAP's "pin" property.
-	- Lenis also makes the scrollbar appear completely smooth as well, which ScrollSmoother fails to do.
-	- You can find the docs on ScrollSmoother [here](https://gsap.com/docs/v3/Plugins/ScrollSmoother/).
+  - "Sticky positioning" will not work if you use ScrollSmoother instead of Lenis and you will have to rely on GSAP's "pin" property.
+  - Lenis also makes the scrollbar appear completely smooth as well, which ScrollSmoother fails to do.
+  - You can find the docs on ScrollSmoother [here](https://gsap.com/docs/v3/Plugins/ScrollSmoother/).
 
 ---
 
@@ -43,7 +45,7 @@ In these notes, we're going to use **GSAP + Lenis** on top of **React**.
 - GSAP is a comprehensive animation framework with lots of support for a variety of different animations, from basic animations to animating text and SVGs.
 - GSAP includes a plugin called ScrollTrigger that provides a way to control animations based on scroll progress.
 - It also includes a property called `scrub` which allows animations to play forward and backward with scroll, instead of just happening once.
-	- Framer Motion does not include `scrub`, which lets users replay animations like it's a cinematic.
+  - Framer Motion does not include `scrub`, which lets users replay animations like it's a cinematic.
 - I would highly recommend taking a look at GSAP's docs, especially the [cheatsheet](https://gsap.com/cheatsheet).
 
 ---
@@ -53,10 +55,10 @@ In these notes, we're going to use **GSAP + Lenis** on top of **React**.
 The ScrollTrigger plugin allows you to make amazing scroll-based animations and is obviously a necessity for scrollytelling.
 
 ```jsx
-import gsap from 'gsap'
-import { ReactLenis, useLenis } from 'lenis/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
+import gsap from "gsap";
+import { ReactLenis, useLenis } from "lenis/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 ```
 
 ---
@@ -66,38 +68,38 @@ gsap.registerPlugin(ScrollTrigger)
 You should sync Lenis’s animation frame loop with GSAP’s ticker so that animations and scroll smoothing happen on the same timing, on the same loop. This is the recommended way by Lenis.
 
 ```jsx
-import gsap from 'gsap'
-import { ReactLenis } from 'lenis/react'
-import { useEffect, useRef } from 'react'
+import gsap from "gsap";
+import { ReactLenis } from "lenis/react";
+import { useEffect, useRef } from "react";
 
 function App() {
-  const lenisRef = useRef()
-  
+  const lenisRef = useRef();
+
   useEffect(() => {
     function update(time) {
-      lenisRef.current?.lenis?.raf(performance.now())
+      lenisRef.current?.lenis?.raf(performance.now());
     }
-  
-    gsap.ticker.add(update)
-  
-    return () => gsap.ticker.remove(update)
-  }, [])
-  
+
+    gsap.ticker.add(update);
+
+    return () => gsap.ticker.remove(update);
+  }, []);
+
   return (
-	<main>
-		<ReactLenis root options={{ autoRaf: false }} ref={lenisRef} />
-		{/* Rest of Website */}
-	</main>
-  )
+    <main>
+      <ReactLenis root options={{ autoRaf: false }} ref={lenisRef} />
+      {/* Rest of Website */}
+    </main>
+  );
 }
 ```
 
 - **RAF** stands for **requestAnimationFrame**
 - This syncs Lenis updates with GSAP’s ticker
 - `ReactLenis` options provide other capabilities as well:
-	- Vertical and horizontal scrolling
-	- Overscroll behavior
-	- `allowNestedScroll` (nest Lenis instances)
+  - Vertical and horizontal scrolling
+  - Overscroll behavior
+  - `allowNestedScroll` (nest Lenis instances)
 - Combining these features can allow for more advanced scrolling animations.
 - You do not need to wrap the `ReactLenis` component around your content.
 
@@ -107,59 +109,61 @@ function App() {
 
 ```jsx
 gsap.fromTo(
-  '.box',
+  ".box",
   { opacity: 0, x: -500, scale: 0.5 },
   {
-	opacity: 1,
-	x: 0,
-	scale: 1,
-	ease: 'power3.out',
-	scrollTrigger: {
-	  trigger: '.box',
-	  start: 'top 80%',
-	  end: 'top 30%',
-	  scrub: true,
-	},
-  }
-)
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: ".box",
+      start: "top 80%",
+      end: "top 30%",
+      scrub: true,
+    },
+  },
+);
 ```
 
 ### Key points:
+
 - **Class selectors** can be used instead of refs -> cleaner code
 - First {brackets} = **initial state**
 - Second {brackets} = **animated state**
 - `start` and `end` define when the animation runs
 - `scrub` allows animations to play **forward and backward** with scroll
-	- `scrub` also accepts values, which creates a small delay on the scrub.
+  - `scrub` also accepts values, which creates a small delay on the scrub.
 
 ---
+
 ## Separating GSAP Animations from Main Code
 
 Because animations rely only on class selectors, they can live in a separate file.
 
 ```jsx
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 export default function GsapAnims() {
-	gsap.fromTo(
-	  '.box',
-	  { opacity: 0, x: -500, scale: 0.5 },
-	  {
-		opacity: 1,
-		x: 0,
-		scale: 1,
-		ease: 'power3.out',
-		scrollTrigger: {
-		  trigger: '.box',
-		  start: 'top 80%',
-		  end: 'top 30%',
-		  scrub: true,
-		},
-	  }
-	)
+  gsap.fromTo(
+    ".box",
+    { opacity: 0, x: -500, scale: 0.5 },
+    {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".box",
+        start: "top 80%",
+        end: "top 30%",
+        scrub: true,
+      },
+    },
+  );
 }
 ```
 
@@ -174,22 +178,24 @@ Make sure to clean up ScrollTrigger's listeners with `ScrollTrigger.killAll();`
 
 ```jsx
 <div
-  className='box'
+  className="box"
   style={{
-	width: 200,
-	height: 200,
-	background: 'hotpink',
-	borderRadius: 24,
-	margin: '0 auto',
-	position: 'sticky',
-	top: '30%',
+    width: 200,
+    height: 200,
+    background: "hotpink",
+    borderRadius: 24,
+    margin: "0 auto",
+    position: "sticky",
+    top: "30%",
   }}
 />
 ```
 
 ### Sticky basics:
+
 - `position: sticky` works by switching between `relative` and `fixed`
 - You **must specify** `top`, `bottom`, `left`, or `right`, which defines where the element sticks in the viewport
+
 ### Stopping Sticky Positioning
 
 Sticky positioning ends **only when the parent element leaves the viewport**.
@@ -218,18 +224,15 @@ Sticky positioning ends **only when the parent element leaves the viewport**.
 There is actually a second way to make an object "sticky", this time using GSAP instead of basic CSS.
 
 ```jsx
-gsap.to(
-	'#pinned-object',
-	{
-		scrollTrigger: {
-			trigger: '#pinned-object',
-			start: 'top 5%',
-			end: 'top -120%',
-			scrub: true,
-			pin: true
-		},
-	},
-)
+gsap.to("#pinned-object", {
+  scrollTrigger: {
+    trigger: "#pinned-object",
+    start: "top 5%",
+    end: "top -120%",
+    scrub: true,
+    pin: true,
+  },
+});
 ```
 
 - In this case, you can use `pin : true`
@@ -239,6 +242,7 @@ gsap.to(
 - `end` defines how long you want it to stick. This replaces the need for making really tall containers to fit your sticky objects.
 
 Obviously, this raises the question: should you use `position: sticky` with basic CSS or `pin: true` with GSAP?
+
 - GSAP's pin is really the better option but it can trickier to use. It doesnt require you to make the sticky object's container tall enough for as much scrolling as you want, you can just pin the container in the viewport for as long as you need. Because of this, it's much more flexible for different screen sizes than setups using sticky positioning and it makes for better advanced scenes.
 - Sticky positioning is still very good for scenes where you have one sticky object and multiple non-sticky objects scrolling past it.
 - My recommendation is that you always try to use GSAP's `pin` as much as possible.
@@ -252,12 +256,13 @@ Also from now on, I will refer to elements using `position: sticky` as being "st
 "Scenes" are the basic organizational element of scrollytelling.
 
 A basic scene with a sticky object might look like this:
+
 1. Create a **scene container** (controls sticky duration)
 2. Add a **sticky object**
 3. Add **non-sticky elements** that scroll past them
-5. When the scene ends:
-	- Sticky object releases because the scene container is out of the viewport
-	- User transitions smoothly to the next scene
+4. When the scene ends:
+   - Sticky object releases because the scene container is out of the viewport
+   - User transitions smoothly to the next scene
 
 ---
 
@@ -267,22 +272,19 @@ This effect starts with a single object, which then scales up to fill the viewpo
 
 1. Start with a single object in the scene container (this is object you're going to zoom in on)
 2. Create a scale animation with GSAP and pin the object:
-	```jsx
-	gsap.to(
-		'#pinned-object',
-		{ 
-			scale: 8, 
-			ease: 'power3.out',
-			scrollTrigger: {
-				trigger: '#pinned-object',
-				start: 'top 30%',
-				end: 'top -100%',
-				scrub: true,
-				pin: true
-			},
-		},
-	)
-	```
+   ```jsx
+   gsap.to("#pinned-object", {
+     scale: 8,
+     ease: "power3.out",
+     scrollTrigger: {
+       trigger: "#pinned-object",
+       start: "top 30%",
+       end: "top -100%",
+       scrub: true,
+       pin: true,
+     },
+   });
+   ```
 3. Setup the next scene container with a background color that matches that of the object that you're scaling
 4. The `end` property should be set so that the object unpins once the new scene container is in place.
 5. Apply `overflow-hidden` to the scene container to prevent the scrollbars from appearing because the scaled object overflows the viewport
@@ -292,33 +294,36 @@ This effect starts with a single object, which then scales up to fill the viewpo
 ## Creating a Text Effect
 
 By "text effect" I mean an effect where the characters or words act as individual elements and animate separately. You can do this by using another GSAP plugin called "SplitText".
+
 ```jsx
-import gsap from 'gsap'
-import { SplitText } from 'gsap/SplitText'
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(SplitText);
 ```
 
 Now you can use SplitText to split a paragraph of text into separate words or characters and animate them separately:
+
 ```jsx
 SplitText.create("#title", {
-	type: "words, words",
-	mask: "lines",
-	autoSplit: true,
-	onSplit(self) {
-		return gsap.from(self.words, {
-			scrollTrigger: {
-				trigger: "#title",
-				start: 'top 80%',
-				end: 'top 40%',
-				scrub: true,
-			},
-			y: 100, 
-			autoAlpha: 0, 
-			stagger: 0.25
-		});
-	}
+  type: "words, words",
+  mask: "lines",
+  autoSplit: true,
+  onSplit(self) {
+    return gsap.from(self.words, {
+      scrollTrigger: {
+        trigger: "#title",
+        start: "top 80%",
+        end: "top 40%",
+        scrub: true,
+      },
+      y: 100,
+      autoAlpha: 0,
+      stagger: 0.25,
+    });
+  },
 });
 ```
+
 - SplitText separates the words in `#title` and provides the array `self.words` for the `onSplit(self)` function
 - `type` and `mask` define how to paragraph of text is going to be separated
 - `onSplit` defines the animation to be played for each word
@@ -336,20 +341,21 @@ You can use GSAP plugins to manipulate SVGs: DrawSVG for animating drawing and M
 
 DrawSVG allows you to animate the drawing of an SVG.
 The main limitation of DrawSVG is that it does not animate the fill of an SVG, it only affects strokes. Remember to keep this in mind when selecting or creating SVGs. Now, Here's a simple example:
+
 ```jsx
 gsap.fromTo(
-    '#draw-svg path',
-    { drawSVG: '0%'},
-    {
-      scrollTrigger: {
-        trigger: '#draw-svg',
-        start: 'top 100%',
-        end: 'top -100%',
-        scrub: true,
-      },
-      drawSVG: '100%'
-    }
-  );
+  "#draw-svg path",
+  { drawSVG: "0%" },
+  {
+    scrollTrigger: {
+      trigger: "#draw-svg",
+      start: "top 100%",
+      end: "top -100%",
+      scrub: true,
+    },
+    drawSVG: "100%",
+  },
+);
 ```
 
 The id of `draw-svg` was applied to the `svg` tag itself. `#draw-svg path` selects the `path` tag inside it. DrawSVG must be applied to a `path` tag not an `svg` tag. The rest is pretty self-explanatory.
@@ -358,16 +364,15 @@ The id of `draw-svg` was applied to the `svg` tag itself. `#draw-svg path` selec
 
 MorphSVG allows you to animate the transition between two SVGs. The most common use for this is when clicking a button.
 Here's an example without using ScrollTrigger:
+
 ```jsx
-gsap.to(
-	'#initial-morph-svg',
-	{
-		ease: 'expo.inOut',
-		morphSVG: '#final-morph-svg',
-		duration: 1
-	}
-)
+gsap.to("#initial-morph-svg", {
+  ease: "expo.inOut",
+  morphSVG: "#final-morph-svg",
+  duration: 1,
+});
 ```
+
 - `#initial-morph-svg` refers to the `path` tag of the initial shape
 - `#final-morph-svg` refers to the `path` tag of the final shape
 - You can put both `path` tags within the same SVG to keep things organized, but you need to keep the final shape hidden. You can do this by using `display: none`.
@@ -377,33 +382,37 @@ gsap.to(
 ## Parallax
 
 Creating a parallax effect is actually surprisingly simple. All you need to do is make each object animate upwards a different amount.
+
 ```jsx
 gsap.to(parallaxObject, {
-	y: objectSpeed,
-	ease: 'none',
-	scrollTrigger: {
-		trigger: '#scene-container-4',
-		start: 'top bottom',
-		end: 'bottom top',
-		scrub: true,
-	}
+  y: objectSpeed,
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#scene-container-4",
+    start: "top bottom",
+    end: "bottom top",
+    scrub: true,
+  },
 });
 ```
+
 - Here we are animating the `parallaxObject` to move upwards using the `y` property. We can make each object animate upwards at different speeds to give a parallax effect. For example:
+
 ```jsx
-gsap.utils.toArray('.parallax-layer-1').forEach((parallaxObject, i) => {
-	gsap.to(parallaxObject, {
-		y: layerSpeed,
-		ease: 'none',
-		scrollTrigger: {
-			trigger: '#scene-container-4',
-			start: 'top bottom',
-			end: 'bottom top',
-			scrub: 1.5,
-		}
-	});
+gsap.utils.toArray(".parallax-layer-1").forEach((parallaxObject, i) => {
+  gsap.to(parallaxObject, {
+    y: layerSpeed,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#scene-container-4",
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1.5,
+    },
+  });
 });
 ```
+
 - With this code, any element with the class name of `.parallax-layer-1` will move upwards at one speed and we can make the next layer animate at a different speed, creating a parallax effect.
 - Just to clarify, `layerSpeed` is not technically a speed - it's the distance the object should cover between the `start` and `end` listed.
 - `scrub` is set to a value like 1.5 to give it a short delay.
@@ -413,38 +422,40 @@ gsap.utils.toArray('.parallax-layer-1').forEach((parallaxObject, i) => {
 ## GSAP Timeline
 
 GSAP's `Timeline` allows you to combine multiple animations for a single object. It has also has multiple useful capabilities:
+
 - Obviously, you can combine multiple animations. Without timeline, they might interfere with each other.
 - You can control the entire timeline by using methods such as `timeline.pause` and `timeline.seek(1.5)`. With this, you could make buttons change where an object was in the animation timeline.
 - You can also set defaults that the rest of animations in the timeline will follow, such as easings or ScrollTrigger.
 
 Here's some code from the demo:
+
 ```jsx
 const card_tl = gsap.timeline({
-	scrollTrigger: {
-		trigger: '#card-stack',
-		start: 'top top',
-		end: 'top -300%',
-		scrub: true,
-	}
+  scrollTrigger: {
+    trigger: "#card-stack",
+    start: "top top",
+    end: "top -300%",
+    scrub: true,
+  },
 });
-card_tl.fromTo(card, 
-	{ x: 1500, scale: 0 },
-	{
-		x: 0,
-		scale: 1,
-		ease: 'power3.out',
-	}
+card_tl.fromTo(
+  card,
+  { x: 1500, scale: 0 },
+  {
+    x: 0,
+    scale: 1,
+    ease: "power3.out",
+  },
 );
-card_tl.to(card,
-	{
-		x: -200*i,
-		y: 20*i,
-		scale: 0.5,
-		ease: 'power3.inOut',
-		delay: 0.5
-	}
-);
+card_tl.to(card, {
+  x: -200 * i,
+  y: 20 * i,
+  scale: 0.5,
+  ease: "power3.inOut",
+  delay: 0.5,
+});
 ```
+
 - In this example, the timeline is used to animate cards.
 - As you can see, ScrollTrigger is listed in the defaults for the timeline.
 - It begins with a `fromTo()` method call and then from then on it uses `to()`.
@@ -464,49 +475,49 @@ This section is for discussing transitions in general. If you look at the demo, 
 You can use GSAP's Observer plugin to make hover animations easy. Observer has lots of other uses as well too.
 
 ```jsx
-import { Observer } from 'gsap/Observer';
-import gsap from 'gsap';
+import { Observer } from "gsap/Observer";
+import gsap from "gsap";
 
 gsap.registerPlugin(Observer);
 
-const element = document.getElementById('my-element');
+const element = document.getElementById("my-element");
 
 Observer.create({
   target: element,
   type: "touch, pointer",
   onHover: () => {
-    gsap.to(element, { scale: 1.1, duration: 0.3, ease: 'power2.out' });
+    gsap.to(element, { scale: 1.1, duration: 0.3, ease: "power2.out" });
   },
   onHoverEnd: () => {
-    gsap.to(element, { scale: 1, duration: 0.3, ease: 'power2.inOut' });
-  }
+    gsap.to(element, { scale: 1, duration: 0.3, ease: "power2.inOut" });
+  },
 });
 ```
 
 ## Video
 
 For playing videos, we can use the `onUpdate()` callback in GSAP animation. Just update the video's current time to use the animation's progress.
+
 ```jsx
-const video = document.getElementById('video');
+const video = document.getElementById("video");
 if (video) {
-	video.addEventListener('loadedmetadata', () => {
-		gsap.to(video,
-		{
-			scrollTrigger: {
-				trigger: video,
-				start: 'top 50%',
-				end: 'bottom -50%',
-				scrub: true,
-				pin: true,
-				onUpdate: self => {
-					video.currentTime = self.progress * video.duration;
-				}
-			}
-		}
-		);
-	});
+  video.addEventListener("loadedmetadata", () => {
+    gsap.to(video, {
+      scrollTrigger: {
+        trigger: video,
+        start: "top 50%",
+        end: "bottom -50%",
+        scrub: true,
+        pin: true,
+        onUpdate: (self) => {
+          video.currentTime = self.progress * video.duration;
+        },
+      },
+    });
+  });
 }
 ```
+
 - The event listener checks `loadedmetadata` to see if the video has loaded.
 - `video` refers to the `<video />` element.
 - `self.progress` is a percentage which we multiply by the total `video.duration`
@@ -517,47 +528,49 @@ The most popular library using 3D models in websites is Three.js. For React we i
 `npm install three @react-three/fiber @react-three/drei`
 
 Some common imports include:
+
 ```jsx
-import { Canvas } from '@react-three/fiber'
-import { useGLTF, useAnimations } from '@react-three/drei'
+import { Canvas } from "@react-three/fiber";
+import { useGLTF, useAnimations } from "@react-three/drei";
 ```
+
 - `Canvas` is a React component that you must use to wrap your 3D scene.
 - `useGLTF` is a function that allows you to use model files.
 - `useAnimations` is another function that allows you to extract animations and play them.
 
 Here's an example of importing a model and playing an animation on scroll:
+
 ```jsx
 export default function Model() {
-	const { scene, animations } = useGLTF('/model.glb');
-	const { actions } = useAnimations(animations, model);
+  const { scene, animations } = useGLTF("/model.glb");
+  const { actions } = useAnimations(animations, model);
 
-	useEffect(() => {
-		if (actions['idle']) {
-			actions['idle'].play();
-			actions['idle'].paused = true;
-		}
+  useEffect(() => {
+    if (actions["idle"]) {
+      actions["idle"].play();
+      actions["idle"].paused = true;
+    }
 
-		gsap.to(actions['idle'], {
-			time: actions['idle'].getClip().duration,
-			ease: "none",
-			scrollTrigger: {
-				trigger: "#canvas",
-				start: "top 60%",
-				end: "bottom top",
-				scrub: true
-			}
-		})
+    gsap.to(actions["idle"], {
+      time: actions["idle"].getClip().duration,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#canvas",
+        start: "top 60%",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
 
-		return () => {
-			if (actions['idle']) actions['idle'].stop();
-		}
-	}, [actions]);
+    return () => {
+      if (actions["idle"]) actions["idle"].stop();
+    };
+  }, [actions]);
 
-	return (
-		<primitive object={scene} scale={0.5} rotation={[0, Math.PI, 0]} />
-	)
+  return <primitive object={scene} scale={0.5} rotation={[0, Math.PI, 0]} />;
 }
 ```
+
 - We start playing the animation and pause it so that we can animate the its current position.
 - We use GSAP and ScrollTrigger to animate the animation's time from its initial starting point to the full time.
 - Return cleanup inside the useEffect
@@ -565,12 +578,14 @@ export default function Model() {
 - Do any necessary transformations here.
 
 Now we use this model component inside our main canvas:
+
 ```jsx
-<Canvas id='canvas' >
-	<directionalLight intensity={3} position={[-1, 4, 5]} />
-	<Model />
+<Canvas id="canvas">
+  <directionalLight intensity={3} position={[-1, 4, 5]} />
+  <Model />
 </Canvas>
 ```
+
 - Canvas wraps all the Three.js components.
 - You need a light in the scene. You can use either `ambientLight` or `directionalLight`. Consider having multiple directional lights.
 
@@ -581,38 +596,40 @@ FLIP stands for First, Last, Invert, Play.
 It allows you to animate complex transformations on elements, which includes reparenting them.
 
 A simple Flip method to use is `Flip.fit()` which fits one element to the exact dimensions of the other.
+
 ```jsx
 const flipAnim = gsap.timeline();
 flipAnim.addLabel("first");
 
 flipAnim.add(
-	Flip.fit("#flip-box", "#flip-container-2", {
-		duration: 1,
-		ease: "power1.inOut"
-	})
+  Flip.fit("#flip-box", "#flip-container-2", {
+    duration: 1,
+    ease: "power1.inOut",
+  }),
 );
 
 flipAnim.addLabel("second");
 
 flipAnim.add(
-	Flip.fit("#flip-box", "#flip-container-3", {
-		duration: 1,
-		ease: "power1.inOut"
-	})
+  Flip.fit("#flip-box", "#flip-container-3", {
+    duration: 1,
+    ease: "power1.inOut",
+  }),
 );
 
 flipAnim.addLabel("third");
 
 ScrollTrigger.create({
-	trigger: "#scene-container-11",
-	animation: flipAnim,
-	scrub: true,
-	start: "top top",
-	end: "top -200%",
-	markers: true,
-	snap: { snapTo: "labels", duration: {min: 0.2, max: 0.3}, delay: 0.1 }
+  trigger: "#scene-container-11",
+  animation: flipAnim,
+  scrub: true,
+  start: "top top",
+  end: "top -200%",
+  markers: true,
+  snap: { snapTo: "labels", duration: { min: 0.2, max: 0.3 }, delay: 0.1 },
 });
 ```
+
 - We can use a timeline to use multiple Flip animations in a row.
 - `#flip-box` will animate to fit `#flip-container-2`, then `#flip-container-3`
 - You can also use snapping with labels so that when the user stops scrolling, the viewport snaps to the nearest label in the timeline.
