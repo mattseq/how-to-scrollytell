@@ -31,9 +31,12 @@ function App() {
 
   return (
     <main>
+      {/* Smooth scrolling root (Lenis + GSAP ticker sync is configured in useEffect) */}
       <ReactLenis root options={{ smoothWheel: true }} ref={lenisRef} />
 
-      {/* Scene 1: Basic Sticky Scene */}
+      {/* -------------------------------------------------------------------------- */}
+      {/* Scene 1: Sticky Basics */}
+      {/* -------------------------------------------------------------------------- */}
       <div id="scene-container-1" className="h-[300vh] p-[2rem]">
         <h1>Basic Sticky Scene</h1>
         <div className="mx-auto mt-6 max-w-3xl rounded-xl border border-black/10 bg-white/75 p-4 text-left text-sm shadow-md backdrop-blur-sm">
@@ -49,20 +52,22 @@ function App() {
         </div>
         <div className="h-screen" />
 
-        {/* Sticky Object */}
+        {/* Sticky target */}
         <div
           id="sticky-object-1"
           className="w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto sticky top-[30%]"
         />
 
-        {/* Non-Sticky Object */}
+        {/* Scrolling companion content */}
         <p id="non-sticky-object-1" className="text-left text-2xl ml-20">
           Non-sticky content keeps moving <br></br> while the sticky target
           stays pinned inside this scene.
         </p>
       </div>
 
-      {/* Scene 2: Text Effect and Zoom */}
+      {/* -------------------------------------------------------------------------- */}
+      {/* Scene 2: SplitText + Zoom Pin */}
+      {/* -------------------------------------------------------------------------- */}
       <div
         id="scene-container-2"
         className="h-[300vh] p-[2rem] mt-20 overflow-hidden"
@@ -76,20 +81,22 @@ function App() {
             directions.
           </p>
           <p>
-            Use pinning for zoom scenes when you want stronger control over
-            duration than CSS sticky can provide.
+            Use pinning for scenes when you want stronger control over the
+            layout and timing than CSS sticky can provide.
           </p>
         </div>
         <div className="h-screen" />
 
-        {/* Zooming Sticky Object */}
+        {/* Zoom target (pinned by ScrollTrigger in GsapAnims) */}
         <div
           id="sticky-object-2"
           className="box w-[200px] h-[200px] bg-fuchsia-500 rounded-3xl mx-auto"
         />
       </div>
 
-      {/* Scene 3: SVG Draw and Morph */}
+      {/* -------------------------------------------------------------------------- */}
+      {/* Scene 3: SVG Draw + Morph */}
+      {/* -------------------------------------------------------------------------- */}
       <div
         id="scene-container-3"
         className="h-[400vh] p-[2rem] bg-fuchsia-500 flex flex-row items-center"
@@ -109,7 +116,7 @@ function App() {
           </div>
         </div>
 
-        {/* DrawSVG Sticky Object */}
+        {/* DrawSVG target */}
         <svg
           id="draw-svg"
           xmlns="http://www.w3.org/2000/svg"
@@ -138,7 +145,7 @@ function App() {
           />
         </svg>
 
-        {/* MorphSVG Sticky Button */}
+        {/* MorphSVG trigger */}
         <button
           className="sticky size-20 top-100 ml-20 bg-white rounded-full flex items-center justify-center shadow-lg"
           onClick={() =>
@@ -170,7 +177,9 @@ function App() {
         </button>
       </div>
 
-      {/* Scene 4: Parallax Effect */}
+      {/* -------------------------------------------------------------------------- */}
+      {/* Scene 4: Parallax Layers */}
+      {/* -------------------------------------------------------------------------- */}
       <div id="scene-container-4" className="h-[300vh] p-[2rem] bg-fuchsia-500">
         <h1 className="mt-100">Parallax</h1>
         <div className="mx-auto mt-6 max-w-3xl rounded-xl border border-black/10 bg-white/80 p-4 text-left text-sm shadow-md backdrop-blur-sm">
@@ -184,7 +193,7 @@ function App() {
           </p>
         </div>
 
-        {/* Parallax Objects */}
+        {/* Parallax layers (animated at different distances) */}
         <div className="parallax-container mt-100">
           <div className="parallax w-[150px] h-[150px] bg-white rounded-3xl mx-auto mb-30" />
           <div className="parallax w-[100px] h-[100px] bg-gray-300 rounded-3xl mx-auto mb-30" />
@@ -195,12 +204,14 @@ function App() {
         <h1>Take a look at this curved transition!</h1>
       </div>
 
-      {/* Scene 5: Curved Cover Transition, Card Stack, and Text Scramble */}
+      {/* -------------------------------------------------------------------------- */}
+      {/* Scene 5: Curved Transition + Card Timeline + Scramble Text */}
+      {/* -------------------------------------------------------------------------- */}
       <div
         id="scene-container-5"
         className="w-full h-[500vh] relative bg-black"
       >
-        {/* Curved Cover Transition & Parallax Text */}
+        {/* Curved cover used as transition cap */}
         <div
           id="curved-cover"
           className="absolute -top-[20vh] w-full h-[25vh] bg-black rounded-t-[50%]"
@@ -228,7 +239,7 @@ function App() {
           </div>
         </div>
 
-        {/* Card Stack and Text Scramble */}
+        {/* Sticky stage for card timeline + scramble text */}
         <div
           className="sticky top-0 w-full h-screen flex items-center justify-center gap-10 overflow-hidden"
           id="card-stack"
@@ -251,8 +262,12 @@ function App() {
           className="sticky top-[50%] text-white text-2xl text-center"
         ></p>
 
-        {/* 
-          Scene that slides in from the bottomt. Unlike the previous transition, it's still inside the previous scene container.
+        {/* -------------------------------------------------------------------------- */}
+        {/* Scene 6: Slide-In Transition */}
+        {/* -------------------------------------------------------------------------- */}
+        {/*
+          Slide-in transition scene from bottom.
+          This remains inside Scene 5 to create a continuous handoff.
         */}
         <div
           id="scene-container-6"
@@ -268,13 +283,17 @@ function App() {
         </div>
       </div>
 
-      {/* Scene 7: Filler scene for some spacing and gradient */}
+      {/* -------------------------------------------------------------------------- */}
+      {/* Scene 7: Spacer Gradient */}
+      {/* -------------------------------------------------------------------------- */}
       <div
         id="scene-container-7"
         className="flex flex-col w-full h-[300vh] bg-linear-to-b from-green-500 to-[#0c0a0b]"
       ></div>
 
-      {/* Scene 8: Video */}
+      {/* -------------------------------------------------------------------------- */}
+      {/* Scene 8: Scroll-Scrubbed Video */}
+      {/* -------------------------------------------------------------------------- */}
       <div
         id="scene-container-8"
         className="flex flex-col items-center justify-center w-full h-[500vh] bg-[#0c0a0b]"
@@ -299,8 +318,12 @@ function App() {
           preload="auto"
         />
       </div>
+
+      {/* -------------------------------------------------------------------------- */}
+      {/* Scene 9: 3D Model Scroll Section */}
+      {/* -------------------------------------------------------------------------- */}
       <div
-        id="scene-container-10"
+        id="scene-container-9"
         className="w-full flex flex-row h-[100vh] bg-black"
       >
         <div className="absolute left-6 top-6 z-10 max-w-sm rounded-xl border border-white/20 bg-black/60 p-4 text-left text-sm text-gray-200 shadow-md backdrop-blur-sm">
@@ -320,7 +343,9 @@ function App() {
         </Canvas>
       </div>
 
-      <div id="scene-container-11" className="w-full h-fit flex flex-col">
+      {/* Spacer before FLIP section */}
+      <div id="scene-container-10" className="w-full h-fit flex flex-col">
+        {/* FLIP pass 1: source state */}
         <div className="w-full h-screen flex flex-row bg-black text-white">
           <div className="w-1/2 h-full flex flex-col justify-center items-center">
             <h1 className="text-4xl font-bold text-center">Flip Pass 1</h1>
@@ -355,6 +380,7 @@ function App() {
           </div>
         </div>
 
+        {/* FLIP pass 2: first destination */}
         <div className="w-full h-screen flex flex-row-reverse bg-black text-white">
           <div className="w-1/2 h-full flex flex-col justify-center items-center">
             <h1 className="text-4xl font-bold text-center">Flip Pass 2</h1>
@@ -368,6 +394,7 @@ function App() {
           </div>
         </div>
 
+        {/* FLIP pass 3: second destination */}
         <div className="w-full h-screen flex flex-row bg-black text-white">
           <div className="w-1/2 h-full flex flex-col justify-center items-center">
             <h1 className="text-4xl font-bold text-center">Flip Pass 3</h1>
@@ -382,7 +409,8 @@ function App() {
         </div>
       </div>
 
-      <div id="scene-container-12" className="w-full h-screen"></div>
+      {/* Final full-screen destination for Flip.fit zoom */}
+      <div id="scene-container-11" className="w-full h-screen"></div>
     </main>
   );
 }

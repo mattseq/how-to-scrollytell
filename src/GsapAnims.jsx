@@ -16,7 +16,9 @@ gsap.registerPlugin(ScrambleTextPlugin);
 gsap.registerPlugin(Flip);
 
 export default function GsapAnims() {
-  // Scene 1: Basic Sticky Scene Animation
+  // --------------------------------------------------------------------------
+  // Scene 1: Sticky intro reveal
+  // --------------------------------------------------------------------------
   gsap.fromTo(
     "#sticky-object-1",
     { opacity: 0, x: -500, scale: 0.5 },
@@ -34,7 +36,9 @@ export default function GsapAnims() {
     },
   );
 
-  // Scene 2: Zoom Animation
+  // --------------------------------------------------------------------------
+  // Scene 2: Zoom + pin
+  // --------------------------------------------------------------------------
   gsap.to("#sticky-object-2", {
     scale: 8,
     ease: "power3.out",
@@ -47,7 +51,7 @@ export default function GsapAnims() {
     },
   });
 
-  // Scene 2: Text Animation
+  // Scene 2: SplitText reveal
   SplitText.create("#title", {
     type: "words, words",
     mask: "lines",
@@ -67,7 +71,9 @@ export default function GsapAnims() {
     },
   });
 
-  // Scene 3: SVG Draw Animation
+  // --------------------------------------------------------------------------
+  // Scene 3: DrawSVG
+  // --------------------------------------------------------------------------
   gsap.fromTo(
     "#draw-svg path",
     { drawSVG: "0%" },
@@ -82,7 +88,9 @@ export default function GsapAnims() {
     },
   );
 
-  // Scene 4: Parallax Effect
+  // --------------------------------------------------------------------------
+  // Scene 4: Parallax layers
+  // --------------------------------------------------------------------------
   gsap.utils.toArray(".parallax").forEach((parallaxObject, i) => {
     gsap.to(parallaxObject, {
       y: (i + 1) * -300,
@@ -96,7 +104,9 @@ export default function GsapAnims() {
     });
   });
 
-  // Scene 5: Curved Cover Transition
+  // --------------------------------------------------------------------------
+  // Scene 5: Curved cover transition
+  // --------------------------------------------------------------------------
   gsap.to("#curved-cover", {
     borderRadius: "0%",
     ease: "power1.inOut",
@@ -108,7 +118,7 @@ export default function GsapAnims() {
     },
   });
 
-  // Scene 5: Card Stack, Text Scramble, and Slide-in Scene Timeline
+  // Scene 5: Card stack timeline + scramble + slide-in handoff
   gsap.utils.toArray("#card-stack .card").forEach((card, i, arr) => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -151,6 +161,9 @@ export default function GsapAnims() {
     card;
   });
 
+  // --------------------------------------------------------------------------
+  // Scene 8: Scroll-scrubbed video playback
+  // --------------------------------------------------------------------------
   const video = document.getElementById("video");
   if (video) {
     video.addEventListener("loadedmetadata", () => {
@@ -179,11 +192,13 @@ export default function GsapAnims() {
     });
   }
 
-  // IGNORE SCENE 9 FOR ABSOLUTELY NO REASON OTHER THAN THAT I SKIPPED THE NUMBER 9
+  // --------------------------------------------------------------------------
+  // Scene 9: Pin 3D section while scroll progresses
+  // --------------------------------------------------------------------------
 
-  gsap.to("#scene-container-10", {
+  gsap.to("#scene-container-9", {
     scrollTrigger: {
-      trigger: "#scene-container-10",
+      trigger: "#scene-container-9",
       start: "top top",
       end: "top -200%",
       pin: true,
@@ -191,6 +206,9 @@ export default function GsapAnims() {
     },
   });
 
+  // --------------------------------------------------------------------------
+  // Scene 10+: FLIP sequence across destination containers
+  // --------------------------------------------------------------------------
   const flipAnim = gsap.timeline();
   flipAnim.addLabel("first");
 
@@ -213,7 +231,7 @@ export default function GsapAnims() {
   flipAnim.addLabel("third");
 
   flipAnim.add(
-    Flip.fit("#flip-box", "#scene-container-12", {
+    Flip.fit("#flip-box", "#scene-container-11", {
       borderRadius: "0%",
       duration: 1,
       ease: "power1.out",
@@ -231,8 +249,9 @@ export default function GsapAnims() {
 
   flipAnim.addLabel("zoom");
 
+  // Drive FLIP timeline with scroll + label snapping.
   ScrollTrigger.create({
-    trigger: "#scene-container-11",
+    trigger: "#scene-container-10",
     animation: flipAnim,
     scrub: true,
     start: "top top",
