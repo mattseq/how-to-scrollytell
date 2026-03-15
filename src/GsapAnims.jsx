@@ -108,41 +108,6 @@ export default function GsapAnims() {
     },
   });
 
-  // Scene 5: Parallax Text
-  gsap.to("#parallax-header", {
-    y: -50,
-    scale: 1.2,
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#scene-container-5",
-      start: "top 70%",
-      end: "bottom top",
-      scrub: true,
-    },
-  });
-  gsap.to("#parallax-text-1", {
-    y: -75,
-    scale: 1.2,
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#scene-container-5",
-      start: "top 50%",
-      end: "bottom top",
-      scrub: true,
-    },
-  });
-  gsap.to("#parallax-text-2", {
-    y: -100,
-    scale: 1.2,
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#scene-container-5",
-      start: "top 30%",
-      end: "bottom top",
-      scrub: true,
-    },
-  });
-
   // Scene 5: Card Stack, Text Scramble, and Slide-in Scene Timeline
   gsap.utils.toArray("#card-stack .card").forEach((card, i, arr) => {
     const tl = gsap.timeline({
@@ -170,7 +135,7 @@ export default function GsapAnims() {
       delay: 0.5,
     });
     tl.to("#appear-text", {
-      scrambleText: "I use Arch btw.",
+      scrambleText: "Scroll can scrub animations like a timeline.",
       delay: 0.5,
     });
     tl.fromTo(
@@ -179,7 +144,7 @@ export default function GsapAnims() {
       {
         yPercent: 0,
         borderRadius: "0%",
-        ease: "power1.out",
+        ease: "power1.inOut",
         delay: 1,
       },
     );

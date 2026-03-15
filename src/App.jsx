@@ -57,7 +57,8 @@ function App() {
 
         {/* Non-Sticky Object */}
         <p id="non-sticky-object-1" className="text-left text-2xl ml-20">
-          Hello there.
+          Non-sticky content keeps moving <br></br> while the sticky target
+          stays pinned inside this scene.
         </p>
       </div>
 
@@ -139,7 +140,7 @@ function App() {
 
         {/* MorphSVG Sticky Button */}
         <button
-          className="sticky size-20 top-100 ml-20"
+          className="sticky size-20 top-100 ml-20 bg-white rounded-full flex items-center justify-center shadow-lg"
           onClick={() =>
             gsap.to("#initial-morph-svg", {
               ease: "expo.inOut",
@@ -214,35 +215,15 @@ function App() {
           >
             Next Scene
           </h1>
-          <div className="w-[50%]">
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-left text-xs text-gray-300 shadow-lg backdrop-blur-sm">
-              <p className="font-semibold text-gray-100">Quick notes</p>
-              <p>
-                Timelines help combine multiple animations without conflicts,
-                then one ScrollTrigger can drive the whole sequence.
-              </p>
-              <p>
-                Label-based snapping is useful for card stacks and chapter-like
-                scroll beats.
-              </p>
-            </div>
-            <p
-              id="parallax-text-1"
-              className="mt-10 text-xl text-gray-700 font-medium"
-            >
-              Here's some more parallax, but on text. I also added some scaling.
+          <div className="w-[50%] rounded-xl border border-white/10 bg-white/5 p-4 text-left text-xs text-gray-300 shadow-lg backdrop-blur-sm mt-10">
+            <p className="font-semibold text-gray-100">Quick notes</p>
+            <p>
+              Timelines help combine multiple animations without conflicts, then
+              one ScrollTrigger can drive the whole sequence.
             </p>
-            <p
-              id="parallax-text-2"
-              className="mt-5 text-xs text-gray-700 font-medium"
-            >
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-              faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-              mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-              urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-              egestas. Iaculis massa nisl malesuada lacinia integer nunc
-              posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad
-              litora torquent per conubia nostra inceptos himenaeos.
+            <p>
+              Label-based snapping is useful for card stacks and chapter-like
+              scroll beats.
             </p>
           </div>
         </div>
@@ -277,9 +258,12 @@ function App() {
           id="scene-container-6"
           className="sticky top-0 w-full h-screen p-[2rem] bg-green-500 rounded-t-[50%] flex flex-col items-center justify-center"
         >
-          <h1 className="text-4xl font-bold text-white">Scene</h1>
+          <h1 className="text-4xl font-bold text-white">Transition Scene</h1>
           <p className="mt-10 text-xl text-white font-medium">
-            Just kidding i dont use arch, i use alpine bc its smol
+            Slide-ins can work really well for transitions between sections. It
+            usually has a different color to make it distinct from the previous
+            content. You can add a border radius to make it a little more
+            interesting and less like a hard cut.
           </p>
         </div>
       </div>
@@ -336,13 +320,11 @@ function App() {
         </Canvas>
       </div>
 
-      <div className="w-full h-screen"></div>
-
       <div id="scene-container-11" className="w-full h-fit flex flex-col">
         <div className="w-full h-screen flex flex-row bg-black text-white">
           <div className="w-1/2 h-full flex flex-col justify-center items-center">
-            <h1 className="text-4xl font-bold text-center">The End</h1>
-            <p className="mt-10 text-xl text-center">Thanks for scrolling!</p>
+            <h1 className="text-4xl font-bold text-center">Flip Pass 1</h1>
+            <p className="mt-10 text-xl text-center">First state</p>
             <div className="mt-8 max-w-md rounded-xl border border-white/15 bg-white/5 p-4 text-left text-sm text-gray-200 shadow-lg backdrop-blur-sm">
               <p className="font-semibold text-white">Quick notes</p>
               <p>
@@ -375,8 +357,8 @@ function App() {
 
         <div className="w-full h-screen flex flex-row-reverse bg-black text-white">
           <div className="w-1/2 h-full flex flex-col justify-center items-center">
-            <h1 className="text-4xl font-bold text-center">The End</h1>
-            <p className="mt-10 text-xl text-center">Thanks for scrolling!</p>
+            <h1 className="text-4xl font-bold text-center">Flip Pass 2</h1>
+            <p className="mt-10 text-xl text-center">First fit target</p>
           </div>
           <div className="w-1/2 h-full bg-white flex flex-col justify-center items-center">
             <div
@@ -388,8 +370,8 @@ function App() {
 
         <div className="w-full h-screen flex flex-row bg-black text-white">
           <div className="w-1/2 h-full flex flex-col justify-center items-center">
-            <h1 className="text-4xl font-bold text-center">The End</h1>
-            <p className="mt-10 text-xl text-center">Thanks for scrolling!</p>
+            <h1 className="text-4xl font-bold text-center">Flip Pass 3</h1>
+            <p className="mt-10 text-xl text-center">Final fit before zoom</p>
           </div>
           <div className="w-1/2 h-full bg-white flex flex-col justify-center items-center">
             <div
