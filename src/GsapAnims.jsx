@@ -175,12 +175,12 @@ export default function GsapAnims() {
     });
     tl.fromTo(
       "#scene-container-6",
-      { xPercent: 100, yPercent: -100 },
+      { yPercent: 100 },
       {
-        xPercent: 0,
         yPercent: 0,
         borderRadius: "0%",
-        ease: "expo.out",
+        ease: "power1.out",
+        delay: 1,
       },
     );
     card;
@@ -249,9 +249,19 @@ export default function GsapAnims() {
 
   flipAnim.add(
     Flip.fit("#flip-box", "#scene-container-12", {
+      borderRadius: "0%",
       duration: 1,
-      ease: "power1.inOut",
+      ease: "power1.out",
     }),
+  );
+
+  flipAnim.add(
+    gsap.fromTo(
+      "#flip-box-contents",
+      { opacity: 0 },
+      { opacity: 1, delay: 0.5, duration: 0.5, ease: "power1.inOut" },
+    ),
+    "<",
   );
 
   flipAnim.addLabel("zoom");

@@ -36,6 +36,17 @@ function App() {
       {/* Scene 1: Basic Sticky Scene */}
       <div id="scene-container-1" className="h-[300vh] p-[2rem]">
         <h1>Basic Sticky Scene</h1>
+        <div className="mx-auto mt-6 max-w-3xl rounded-xl border border-black/10 bg-white/75 p-4 text-left text-sm shadow-md backdrop-blur-sm">
+          <p className="font-semibold">Quick notes</p>
+          <p>
+            A sticky element needs a top/bottom/left/right value and it only
+            sticks while its parent scene remains in view.
+          </p>
+          <p>
+            This is the base scene pattern: one sticky subject, plus regular
+            content scrolling past it.
+          </p>
+        </div>
         <div className="h-screen" />
 
         {/* Sticky Object */}
@@ -56,6 +67,18 @@ function App() {
         className="h-[300vh] p-[2rem] mt-20 overflow-hidden"
       >
         <h1 id="title">Text Effect and Zoom</h1>
+        <div className="mx-auto mt-6 max-w-3xl rounded-xl border border-black/10 bg-white/75 p-4 text-left text-sm shadow-md backdrop-blur-sm">
+          <p className="font-semibold">Quick notes</p>
+          <p>
+            ScrollTrigger with <span className="font-semibold">scrub</span> ties
+            motion to scroll progress, so users can replay the effect in both
+            directions.
+          </p>
+          <p>
+            Use pinning for zoom scenes when you want stronger control over
+            duration than CSS sticky can provide.
+          </p>
+        </div>
         <div className="h-screen" />
 
         {/* Zooming Sticky Object */}
@@ -70,7 +93,20 @@ function App() {
         id="scene-container-3"
         className="h-[400vh] p-[2rem] bg-fuchsia-500 flex flex-row items-center"
       >
-        <h1 className="sticky top-[50%]">SVG Draw and Morph</h1>
+        <div className="sticky top-[45%]">
+          <h1>SVG Draw and Morph</h1>
+          <div className="mt-6 max-w-md rounded-xl border border-black/20 bg-white/80 p-4 text-left text-sm shadow-md backdrop-blur-sm">
+            <p className="font-semibold">Quick notes</p>
+            <p>
+              DrawSVG animates stroke paths, not fills, so target path nodes for
+              line-drawing effects.
+            </p>
+            <p>
+              MorphSVG is great for icon toggles: animate one hidden path into
+              another on interaction.
+            </p>
+          </div>
+        </div>
 
         {/* DrawSVG Sticky Object */}
         <svg
@@ -136,6 +172,16 @@ function App() {
       {/* Scene 4: Parallax Effect */}
       <div id="scene-container-4" className="h-[300vh] p-[2rem] bg-fuchsia-500">
         <h1 className="mt-100">Parallax</h1>
+        <div className="mx-auto mt-6 max-w-3xl rounded-xl border border-black/10 bg-white/80 p-4 text-left text-sm shadow-md backdrop-blur-sm">
+          <p className="font-semibold">Quick notes</p>
+          <p>
+            Parallax is usually just layered elements moving different distances
+            on the y-axis over the same scroll range.
+          </p>
+          <p>
+            A light scrub delay can make layers feel smoother and less robotic.
+          </p>
+        </div>
 
         {/* Parallax Objects */}
         <div className="parallax-container mt-100">
@@ -169,6 +215,17 @@ function App() {
             Next Scene
           </h1>
           <div className="w-[50%]">
+            <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-left text-xs text-gray-300 shadow-lg backdrop-blur-sm">
+              <p className="font-semibold text-gray-100">Quick notes</p>
+              <p>
+                Timelines help combine multiple animations without conflicts,
+                then one ScrollTrigger can drive the whole sequence.
+              </p>
+              <p>
+                Label-based snapping is useful for card stacks and chapter-like
+                scroll beats.
+              </p>
+            </div>
             <p
               id="parallax-text-1"
               className="mt-10 text-xl text-gray-700 font-medium"
@@ -214,19 +271,16 @@ function App() {
         ></p>
 
         {/* 
-          Scene that slides in from the top right. Unlike the previous transition, it's still inside the previous scene container.
-          Also it uses a wrapper to prevent overflow issues.
+          Scene that slides in from the bottomt. Unlike the previous transition, it's still inside the previous scene container.
         */}
-        <div className="overflow-hidden sticky top-0 w-full">
-          <div
-            id="scene-container-6"
-            className="sticky top-0 w-full h-screen p-[2rem] bg-green-500 rounded-bl-[50%]"
-          >
-            <h1 className="text-4xl font-bold text-white">Scene</h1>
-            <p className="mt-10 text-xl text-white font-medium">
-              Just kidding i dont use arch, i use alpine bc its smol
-            </p>
-          </div>
+        <div
+          id="scene-container-6"
+          className="sticky top-0 w-full h-screen p-[2rem] bg-green-500 rounded-t-[50%] flex flex-col items-center justify-center"
+        >
+          <h1 className="text-4xl font-bold text-white">Scene</h1>
+          <p className="mt-10 text-xl text-white font-medium">
+            Just kidding i dont use arch, i use alpine bc its smol
+          </p>
         </div>
       </div>
 
@@ -241,6 +295,17 @@ function App() {
         id="scene-container-8"
         className="flex flex-col items-center justify-center w-full h-[500vh] bg-[#0c0a0b]"
       >
+        <div className="sticky top-12 z-10 mb-10 max-w-3xl rounded-xl border border-white/20 bg-black/50 p-4 text-left text-sm text-gray-200 shadow-md backdrop-blur-sm">
+          <p className="font-semibold text-white">Quick notes</p>
+          <p>
+            For scroll-driven video, map ScrollTrigger progress to currentTime
+            inside onUpdate.
+          </p>
+          <p>
+            Waiting for loadedmetadata ensures the duration is known before
+            syncing playback.
+          </p>
+        </div>
         <video
           id="video"
           className="sticky top-0 size-150 object-cover"
@@ -254,6 +319,17 @@ function App() {
         id="scene-container-10"
         className="w-full flex flex-row h-[100vh] bg-black"
       >
+        <div className="absolute left-6 top-6 z-10 max-w-sm rounded-xl border border-white/20 bg-black/60 p-4 text-left text-sm text-gray-200 shadow-md backdrop-blur-sm">
+          <p className="font-semibold text-white">Quick notes</p>
+          <p>
+            In React Three Fiber, Canvas wraps the 3D scene and models are
+            loaded as reusable components.
+          </p>
+          <p>
+            A common pattern is to play an animation, pause it, then animate
+            clip time with scroll.
+          </p>
+        </div>
         <Canvas id="canvas" className="align-start" camera={[0, 0, 0]}>
           <directionalLight intensity={3} position={[-1, 4, 5]} />
           <Model />
@@ -267,12 +343,33 @@ function App() {
           <div className="w-1/2 h-full flex flex-col justify-center items-center">
             <h1 className="text-4xl font-bold text-center">The End</h1>
             <p className="mt-10 text-xl text-center">Thanks for scrolling!</p>
+            <div className="mt-8 max-w-md rounded-xl border border-white/15 bg-white/5 p-4 text-left text-sm text-gray-200 shadow-lg backdrop-blur-sm">
+              <p className="font-semibold text-white">Quick notes</p>
+              <p>
+                FLIP means First, Last, Invert, Play. It makes layout-shift
+                animations and reparenting feel smooth.
+              </p>
+              <p>
+                Flip.fit is a practical way to map one box into another during a
+                scroll-driven sequence.
+              </p>
+            </div>
           </div>
           <div className="w-1/2 h-full bg-white flex flex-col justify-center items-center">
             <div
               id="flip-box"
               className="w-1/4 h-1/4 bg-purple-700 rounded-2xl"
-            ></div>
+            >
+              <div
+                className="w-full h-full flex flex-col justify-center items-center text-white text-center"
+                id="flip-box-contents"
+              >
+                <h1>Extra Scene</h1>
+                <p>
+                  I dont really know what to put here so imma just yap ok cool.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
