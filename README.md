@@ -1,5 +1,7 @@
 # How To Scrollytell
 
+This is a collection of notes (including a demo) about scrollytelling.
+
 ## Disclaimer
 
 I am not an expert in scrollytelling - I'm learning alongside you. The purpose of these notes is not to prescribe the “correct” way, but to quickly introduce you to key scrollytelling concepts (like sticky positioning and scroll-based animation) that I’ve discovered through my own research. The techniques shown here reflect my current understanding and are intended as helpful recommendations, not definitive best practices.
@@ -289,6 +291,8 @@ This effect starts with a single object, which then scales up to fill the viewpo
 4. The `end` property should be set so that the object unpins once the new scene container is in place.
 5. Apply `overflow-hidden` to the scene container to prevent the scrollbars from appearing because the scaled object overflows the viewport
 
+You can also use GSAP's Flip plugin to do this more cleanly, which is covered below.
+
 ---
 
 ## Creating a Text Effect
@@ -464,12 +468,6 @@ card_tl.to(card, {
 
 There's one main way to do horizontal scrolling and that's not to do it at all. You can make the illusion of horizontal scrolling by pinning the container so that it stays in the viewport and making animations happen as you scroll. This also gives you a bit more control. The problem with actual horizontal scrolling is that, by default you can't just scroll as usual. You need to press shift then scroll. We obviously don't want that. There are workarounds and maybe even ways to do it cleanly, I just haven't tried to figure it out yet.
 
-## Transitions
-
-This section is for discussing transitions in general. If you look at the demo, you'll see multiple transitions, many of which are achieved slightly different ways.
-
-### Sliding Transitions
-
 ## Hover Animations
 
 You can use GSAP's Observer plugin to make hover animations easy. Observer has lots of other uses as well too.
@@ -521,6 +519,77 @@ if (video) {
 - The event listener checks `loadedmetadata` to see if the video has loaded.
 - `video` refers to the `<video />` element.
 - `self.progress` is a percentage which we multiply by the total `video.duration`
+
+You can also use multiple images as frames and switch out images.
+
+```jsx
+const frameCount = 135;
+
+// get image srcs from folder
+const images = Array.from(
+  { length: frameCount },
+  (_, i) => `/animation/${(i + 1).toString().padStart(4, '0')}.png`,
+);
+
+export default function Intro() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    let playhead = { frame: 0 };
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext('2d');
+    if (!canvas || !context) return;
+
+    let currentFrame = -1;
+    let imgs: HTMLImageElement[] = [];
+
+    // function to render the current frame based on playhead.frame
+    function render() {
+      const frame = Math.round(playhead.frame);
+      if (frame !== currentFrame && imgs[frame]?.complete) {
+        assert(canvas && context);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(imgs[frame], 0, 0);
+        currentFrame = frame;
+      }
+    }
+
+    // preload images
+    imgs = images.map((src, i) => {
+      const img = new Image();
+      img.src = src;
+      // render first image when loaded
+      i || (img.onload = render);
+      return img;
+    });
+
+    // animate playhead.frame through frames on scroll
+    gsap.to(playhead, {
+      frame: frameCount - 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#intro',
+        start: 'top top',
+        end: 'top -200%',
+        scrub: true,
+        pin: true,
+        pinnedContainer: '#intro',
+        onUpdate: render,
+      },
+    });
+  }, []);
+
+  return (
+    <div id='intro'>
+      <canvas id='canvas' ref={canvasRef} width={1920} height={950} />
+    </div>
+  );
+}
+```
+
+- use a canvas to directly render images
+- you can animate the playhead's frame property based on ScrollTrigger
+- on every scroll update, it will re-render using the playhead
 
 ## 3D Models
 
@@ -633,10 +702,6 @@ ScrollTrigger.create({
 - We can use a timeline to use multiple Flip animations in a row.
 - `#flip-box` will animate to fit `#flip-container-2`, then `#flip-container-3`
 - You can also use snapping with labels so that when the user stops scrolling, the viewport snaps to the nearest label in the timeline.
-
-## Animated Graphs
-
-## Audio
 
 ## Inspiration
 
